@@ -324,6 +324,12 @@
       18
     ]
   },
+  "fonte_texto": {
+    "quadros": 124
+  },
+  "fonte_titulo": {
+    "quadros": 124
+  },
   "fx_agua_splash": {
     "quadros": 15,
     "impacto": 4,
