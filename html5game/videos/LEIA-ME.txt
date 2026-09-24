@@ -1,0 +1,10 @@
+Curtas dos Especiais (CINEMATICA.md 7).
+
+ult_<heroi>.mp4           -> o Especial do heroi toca este video (kael, lina, nara, irvyng)
+ult_auriel_<letra>.mp4    -> Auriel, um por arcanjo: a = Miguel, b = Gabriel, c = Rafael, d = Uriel
+ult_<...>.json (opcional) -> marcas de tempo: nome do golpe, impacto, sons, volume
+
+Monte com: python3 ferramentas/montar_video_ult.py <heroi> [--variante a] clipe_01.mp4 clipe_02.mp4 ...
+(--variante e obrigatorio no auriel e proibido nos outros; curta de ate 25 s (2 ou 3 clipes de 8 s):
+a ferramenta e o checar_video.py recusam o que o jogo ignoraria ou cortaria.)
+Sem o mp4 o jogo toca o filme de quadros de sempre. Nomes sempre em minusculas.

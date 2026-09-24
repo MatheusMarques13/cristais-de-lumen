@@ -1,0 +1,3203 @@
+{
+  "cen_fogo_grande": {
+    "quadros": 24,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      5,
+      7,
+      10,
+      13,
+      16,
+      20
+    ]
+  },
+  "cen_fogo_tocha": {
+    "quadros": 24,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      6,
+      12,
+      17
+    ]
+  },
+  "cine_auriel_p1": {
+    "quadros": 17,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      11,
+      16
+    ]
+  },
+  "cine_auriel_p2": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "cine_auriel_p3a": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "cine_auriel_p3b": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "cine_auriel_p4a": {
+    "quadros": 29,
+    "qps": 24,
+    "chaves": [
+      0,
+      10,
+      19,
+      28
+    ]
+  },
+  "cine_auriel_p4b": {
+    "quadros": 29,
+    "qps": 24,
+    "chaves": [
+      0,
+      10,
+      19,
+      28
+    ]
+  },
+  "cine_auriel_p5": {
+    "quadros": 17,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      11,
+      16
+    ]
+  },
+  "cine_irvyng_p1": {
+    "quadros": 22,
+    "qps": 24,
+    "chaves": [
+      0,
+      2,
+      5,
+      7,
+      10,
+      12,
+      15,
+      17,
+      20
+    ]
+  },
+  "cine_irvyng_p2": {
+    "quadros": 24,
+    "qps": 24,
+    "chaves": [
+      0,
+      3,
+      5,
+      8,
+      11,
+      13,
+      16,
+      19,
+      21
+    ]
+  },
+  "cine_irvyng_p3": {
+    "quadros": 24,
+    "qps": 24,
+    "chaves": [
+      0,
+      3,
+      5,
+      8,
+      11,
+      13,
+      16,
+      19,
+      21
+    ]
+  },
+  "cine_irvyng_p4": {
+    "quadros": 26,
+    "qps": 24,
+    "chaves": [
+      0,
+      3,
+      6,
+      9,
+      12,
+      14,
+      17,
+      20,
+      23
+    ]
+  },
+  "cine_irvyng_p5": {
+    "quadros": 22,
+    "qps": 24,
+    "chaves": [
+      0,
+      2,
+      5,
+      7,
+      10,
+      12,
+      15,
+      17,
+      20
+    ]
+  },
+  "cine_kael_p1": {
+    "quadros": 22,
+    "qps": 24,
+    "chaves": [
+      0,
+      7,
+      14,
+      21
+    ]
+  },
+  "cine_kael_p2": {
+    "quadros": 26,
+    "qps": 24,
+    "chaves": [
+      0,
+      9,
+      17,
+      25
+    ]
+  },
+  "cine_kael_p3": {
+    "quadros": 24,
+    "qps": 24,
+    "chaves": [
+      0,
+      8,
+      16,
+      23
+    ]
+  },
+  "cine_kael_p4": {
+    "quadros": 29,
+    "qps": 24,
+    "chaves": [
+      0,
+      10,
+      19,
+      28
+    ]
+  },
+  "cine_kael_p5": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "cine_lina_p1": {
+    "quadros": 22,
+    "qps": 24,
+    "chaves": [
+      0,
+      7,
+      14,
+      21
+    ]
+  },
+  "cine_lina_p2": {
+    "quadros": 26,
+    "qps": 24,
+    "chaves": [
+      0,
+      9,
+      17,
+      25
+    ]
+  },
+  "cine_lina_p3": {
+    "quadros": 24,
+    "qps": 24,
+    "chaves": [
+      0,
+      8,
+      16,
+      23
+    ]
+  },
+  "cine_lina_p4": {
+    "quadros": 29,
+    "qps": 24,
+    "chaves": [
+      0,
+      10,
+      19,
+      28
+    ]
+  },
+  "cine_lina_p5": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "cine_nara_p1": {
+    "quadros": 22,
+    "qps": 24,
+    "chaves": [
+      0,
+      7,
+      14,
+      21
+    ]
+  },
+  "cine_nara_p2": {
+    "quadros": 26,
+    "qps": 24,
+    "chaves": [
+      0,
+      9,
+      17,
+      25
+    ]
+  },
+  "cine_nara_p3": {
+    "quadros": 24,
+    "qps": 24,
+    "chaves": [
+      0,
+      8,
+      16,
+      23
+    ]
+  },
+  "cine_nara_p4": {
+    "quadros": 29,
+    "qps": 24,
+    "chaves": [
+      0,
+      10,
+      19,
+      28
+    ]
+  },
+  "cine_nara_p5": {
+    "quadros": 19,
+    "qps": 24,
+    "chaves": [
+      0,
+      6,
+      12,
+      18
+    ]
+  },
+  "fx_agua_splash": {
+    "quadros": 15,
+    "impacto": 4,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      4,
+      8,
+      14
+    ]
+  },
+  "fx_agua_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_aura": {
+    "quadros": 20,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      16,
+      19
+    ]
+  },
+  "fx_aureola": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_bola_fogo_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      5,
+      9
+    ]
+  },
+  "fx_borg_colisao": {
+    "quadros": 22,
+    "impacto": 12,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      6,
+      9,
+      12,
+      15,
+      17,
+      19,
+      21
+    ]
+  },
+  "fx_borg_quebra": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      7,
+      11
+    ]
+  },
+  "fx_corte": {
+    "quadros": 10,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_cristal_estouro": {
+    "quadros": 10,
+    "impacto": 6,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_cristal_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      10
+    ]
+  },
+  "fx_cura": {
+    "quadros": 10,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_egide": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4
+    ]
+  },
+  "fx_egide_colisao": {
+    "quadros": 9,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      7
+    ]
+  },
+  "fx_egide_quebra": {
+    "quadros": 4,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "fx_escudo": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      10
+    ]
+  },
+  "fx_escudo_batida": {
+    "quadros": 12,
+    "impacto": 4,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      4,
+      7,
+      11
+    ]
+  },
+  "fx_especial_kael": {
+    "quadros": 34,
+    "impacto": 18,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      9,
+      12,
+      15,
+      18,
+      23,
+      26,
+      33
+    ]
+  },
+  "fx_especial_lina": {
+    "quadros": 34,
+    "impacto": 20,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      12,
+      20,
+      23,
+      26,
+      33
+    ]
+  },
+  "fx_especial_nara": {
+    "quadros": 34,
+    "impacto": 24,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      12,
+      21,
+      24,
+      27,
+      30,
+      33
+    ]
+  },
+  "fx_esporos": {
+    "quadros": 20,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      16,
+      19
+    ]
+  },
+  "fx_explosao_fogo": {
+    "quadros": 15,
+    "impacto": 4,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      5,
+      7,
+      9,
+      11,
+      14
+    ]
+  },
+  "fx_flecha_dourada_impacto": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      7
+    ]
+  },
+  "fx_flecha_dourada_voo": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      4
+    ]
+  },
+  "fx_impacto": {
+    "quadros": 10,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_irvyng_chama_azul": {
+    "quadros": 9,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      5,
+      7
+    ]
+  },
+  "fx_irvyng_cometa_explosao": {
+    "quadros": 9,
+    "impacto": 2,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      5,
+      7
+    ]
+  },
+  "fx_irvyng_esfera_estouro": {
+    "quadros": 8,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      4,
+      6
+    ]
+  },
+  "fx_irvyng_esfera_voo": {
+    "quadros": 4,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "fx_irvyng_feixe_impacto": {
+    "quadros": 8,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      4,
+      6
+    ]
+  },
+  "fx_irvyng_orbe": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "fx_irvyng_raio_orbe": {
+    "quadros": 8,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      4,
+      6
+    ]
+  },
+  "fx_marca_lua": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "fx_meteoro_impacto": {
+    "quadros": 15,
+    "impacto": 4,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      5,
+      7,
+      9,
+      11,
+      14
+    ]
+  },
+  "fx_meteoro_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      7,
+      10
+    ]
+  },
+  "fx_mordida": {
+    "quadros": 12,
+    "impacto": 3,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      11
+    ]
+  },
+  "fx_onda_choque": {
+    "quadros": 15,
+    "impacto": 5,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      5,
+      9,
+      14
+    ]
+  },
+  "fx_onda_sombria": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_pedra_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      5,
+      8
+    ]
+  },
+  "fx_pilar_luz": {
+    "quadros": 12,
+    "impacto": 7,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      4,
+      7,
+      11
+    ]
+  },
+  "fx_poeira": {
+    "quadros": 15,
+    "impacto": 0,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      8,
+      11,
+      14
+    ]
+  },
+  "fx_reviver": {
+    "quadros": 24,
+    "impacto": 8,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      8,
+      13,
+      23
+    ]
+  },
+  "fx_sombra_estouro": {
+    "quadros": 10,
+    "impacto": 6,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_sombra_voo": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "fx_vinhas": {
+    "quadros": 22,
+    "impacto": 9,
+    "qps": 24,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9,
+      12,
+      15,
+      18,
+      21
+    ]
+  },
+  "heroi_auriel_andar": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_auriel_ataque": {
+    "quadros": 13,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_auriel_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_auriel_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "heroi_auriel_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "heroi_auriel_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "heroi_auriel_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_auriel_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_auriel_magia": {
+    "quadros": 13,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_auriel_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_auriel_queda": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      3,
+      5,
+      7
+    ]
+  },
+  "heroi_irvyng_andar": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "heroi_irvyng_ataque": {
+    "quadros": 19,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ]
+  },
+  "heroi_irvyng_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_irvyng_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "heroi_irvyng_circulo": {
+    "quadros": 36,
+    "impacto": 18,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ]
+  },
+  "heroi_irvyng_cometa": {
+    "quadros": 32,
+    "impacto": 18,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  "heroi_irvyng_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_irvyng_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "heroi_irvyng_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_irvyng_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_irvyng_egide": {
+    "quadros": 22,
+    "impacto": 10,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      10,
+      13,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  "heroi_irvyng_esfera": {
+    "quadros": 24,
+    "impacto": 13,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      9,
+      12,
+      13,
+      16,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  "heroi_irvyng_parado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "heroi_irvyng_punho": {
+    "quadros": 34,
+    "impacto": 20,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ]
+  },
+  "heroi_irvyng_queda": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      3,
+      5,
+      7
+    ]
+  },
+  "heroi_kael_andar": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_kael_ataque": {
+    "quadros": 13,
+    "impacto": 5,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ]
+  },
+  "heroi_kael_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_kael_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "heroi_kael_carga": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_kael_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "heroi_kael_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "heroi_kael_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_kael_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_kael_especial": {
+    "quadros": 12,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_kael_magia": {
+    "quadros": 12,
+    "impacto": 5,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_kael_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_kael_queda": {
+    "quadros": 10,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      9
+    ]
+  },
+  "heroi_lina_andar": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_lina_ataque": {
+    "quadros": 12,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_lina_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_lina_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "heroi_lina_carga": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_lina_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "heroi_lina_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "heroi_lina_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_lina_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_lina_especial": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "heroi_lina_magia": {
+    "quadros": 15,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "heroi_lina_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_lina_queda": {
+    "quadros": 10,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      3,
+      5,
+      7,
+      9
+    ]
+  },
+  "heroi_nara_andar": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_nara_ataque": {
+    "quadros": 12,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_nara_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_nara_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "heroi_nara_carga": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_nara_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "heroi_nara_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "heroi_nara_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_nara_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "heroi_nara_especial": {
+    "quadros": 12,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "heroi_nara_magia": {
+    "quadros": 16,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ]
+  },
+  "heroi_nara_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "heroi_nara_queda": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11
+    ]
+  },
+  "invoc_cervo_bramido": {
+    "quadros": 11,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      4,
+      7,
+      10
+    ]
+  },
+  "invoc_passaros_voo": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "invoc_urso_corrida": {
+    "quadros": 4,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "invoc_urso_patada": {
+    "quadros": 12,
+    "impacto": 5,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      2,
+      5,
+      8
+    ]
+  },
+  "monstro_adorador_ataque": {
+    "quadros": 10,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4,
+      7,
+      9
+    ]
+  },
+  "monstro_adorador_atordoado": {
+    "quadros": 1,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_adorador_dano": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_adorador_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_adorador_dor_leve": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_adorador_esfera": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_adorador_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      6
+    ]
+  },
+  "monstro_adorador_prece": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_adorador_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_auriel_ataque": {
+    "quadros": 13,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "monstro_auriel_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_auriel_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "monstro_auriel_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_auriel_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_auriel_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_auriel_magia": {
+    "quadros": 13,
+    "impacto": 6,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      5,
+      6,
+      9,
+      10,
+      11
+    ]
+  },
+  "monstro_auriel_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "monstro_cogumelo_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_cogumelo_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_freira_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_freira_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_freira_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_golem_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_golem_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_golem_estelar_ataque": {
+    "quadros": 10,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4,
+      7,
+      9
+    ]
+  },
+  "monstro_golem_estelar_atordoado": {
+    "quadros": 1,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_golem_estelar_casca": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_golem_estelar_dano": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_golem_estelar_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_golem_estelar_dor_leve": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_golem_estelar_onda": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_golem_estelar_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      6
+    ]
+  },
+  "monstro_golem_estelar_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_guerreiro_tribo_ataque": {
+    "quadros": 10,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4,
+      7,
+      9
+    ]
+  },
+  "monstro_guerreiro_tribo_atordoado": {
+    "quadros": 1,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_guerreiro_tribo_dano": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_guerreiro_tribo_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_guerreiro_tribo_dor_leve": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_guerreiro_tribo_marca": {
+    "quadros": 6,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1
+    ]
+  },
+  "monstro_guerreiro_tribo_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4,
+      6
+    ]
+  },
+  "monstro_guerreiro_tribo_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_guerreiro_tribo_rajada": {
+    "quadros": 8,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_irvyng_ataque": {
+    "quadros": 19,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ]
+  },
+  "monstro_irvyng_atordoado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_irvyng_cansado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      8
+    ]
+  },
+  "monstro_irvyng_circulo": {
+    "quadros": 36,
+    "impacto": 18,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      18,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ]
+  },
+  "monstro_irvyng_cometa": {
+    "quadros": 32,
+    "impacto": 18,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ]
+  },
+  "monstro_irvyng_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_irvyng_defesa": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      0,
+      1,
+      2,
+      4
+    ]
+  },
+  "monstro_irvyng_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_irvyng_dor_leve": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_irvyng_egide": {
+    "quadros": 22,
+    "impacto": 10,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      10,
+      13,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  "monstro_irvyng_esfera": {
+    "quadros": 24,
+    "impacto": 13,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      9,
+      12,
+      13,
+      16,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  "monstro_irvyng_parado": {
+    "quadros": 16,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ]
+  },
+  "monstro_irvyng_punho": {
+    "quadros": 34,
+    "impacto": 20,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ]
+  },
+  "monstro_irvyng_queda": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      3,
+      5,
+      7
+    ]
+  },
+  "monstro_leviata_ataque": {
+    "quadros": 10,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      2,
+      4,
+      7
+    ]
+  },
+  "monstro_leviata_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_leviata_emboscada": {
+    "quadros": 6,
+    "impacto": 2,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      2
+    ]
+  },
+  "monstro_leviata_furia": {
+    "quadros": 7,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1
+    ]
+  },
+  "monstro_leviata_jato": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_leviata_mare": {
+    "quadros": 7,
+    "impacto": 1,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1
+    ]
+  },
+  "monstro_leviata_mergulho": {
+    "quadros": 4,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1
+    ]
+  },
+  "monstro_leviata_parado": {
+    "quadros": 8,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_leviata_queda": {
+    "quadros": 5,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1
+    ]
+  },
+  "monstro_lobo_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_lobo_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_lobo_lunar_ataque": {
+    "quadros": 10,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      2,
+      4,
+      7
+    ]
+  },
+  "monstro_lobo_lunar_atordoado": {
+    "quadros": 1,
+    "impacto": 0,
+    "qps": 12,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_lobo_lunar_dano": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_lobo_lunar_dor_forte": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_lobo_lunar_dor_leve": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0
+    ]
+  },
+  "monstro_lobo_lunar_investida": {
+    "quadros": 7,
+    "impacto": 3,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      3
+    ]
+  },
+  "monstro_lobo_lunar_parado": {
+    "quadros": 6,
+    "impacto": 0,
+    "qps": 6,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      2,
+      4
+    ]
+  },
+  "monstro_lobo_lunar_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_lobo_lunar_uivo": {
+    "quadros": 8,
+    "impacto": 4,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_morcego_ataque": {
+    "quadros": 12,
+    "impacto": 5,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      2,
+      5,
+      8
+    ]
+  },
+  "monstro_morcego_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_morcego_parado": {
+    "quadros": 11,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "monstro_rei_ataque": {
+    "quadros": 12,
+    "impacto": 5,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      1,
+      2,
+      5,
+      8
+    ]
+  },
+  "monstro_rei_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  },
+  "monstro_rei_parado": {
+    "quadros": 12,
+    "impacto": 0,
+    "qps": 24,
+    "laco": true,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6,
+      9
+    ]
+  },
+  "monstro_sacerdote_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_sacerdote_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3
+    ]
+  },
+  "monstro_sacerdote_queda": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": true,
+    "chaves": [
+      1,
+      4
+    ]
+  },
+  "monstro_slime_ataque": {
+    "quadros": 14,
+    "impacto": 7,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      1,
+      2,
+      3,
+      6,
+      7,
+      10,
+      13
+    ]
+  },
+  "monstro_slime_dano": {
+    "quadros": 7,
+    "impacto": 0,
+    "qps": 12,
+    "laco": false,
+    "segurar": false,
+    "chaves": [
+      0,
+      3,
+      6
+    ]
+  }
+}
