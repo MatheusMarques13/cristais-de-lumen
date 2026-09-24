@@ -81,6 +81,19 @@
 
         <!-- Builtin injector for injecting flurry analytics code -->
         
+    
+    <!-- ajuste de publicacao: o canvas cabe na janela sem cortar -->
+    <style>
+        html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+        #canvas {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(100vw, calc(100vh * 16 / 9));
+            height: min(100vh, calc(100vw * 9 / 16));
+            max-width: 100vw; max-height: 100vh;
+            touch-action: none;
+        }
+    </style>
     </head>
 
     <!-- Custom PostHead code is injected here -->
