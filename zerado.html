@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cristais de Lumen · jogo zerado</title>
+<!--
+  Pagina de teste do professor (02/10/2026): grava no navegador um save do jogo
+  ZERADO (as 5 regioes vencidas, os 5 herois no nivel 16, a Arvore toda comprada,
+  baus abertos) e abre o jogo. O progresso que ja existia neste aparelho fica
+  guardado e volta com "Restaurar meu progresso".
+
+  O save e o do build publicado em 28/09 (Kael, Lina, Nara, Auriel, Irvyng;
+  floresta, caverna, castelo, catedral, templo_estelar). Fonte legivel:
+  saves_teste/save_zerado_web_2809.json. Quando o build novo for publicado
+  (Mercanteaus, Faialis, Chiaroscuro, Algaz, Tayia, Josaph), refazer o save.
+
+  Onde o GameMaker HTML5 guarda arquivo: localStorage[prefixo + game_save_id +
+  nome], prefixo = nome do jogo sem simbolos + "." + game_id + "." (medido no
+  jogo publicado: CristaisdeLumen.0.), valor = base64 dos bytes do buffer (o
+  JSON + o zero do fim que o buffer_string grava).
+-->
+<style>
+  :root {
+    --fundo: #0e1a33; --cartao: #1b2c52; --borda: #8a6a3c; --texto: #f4ecd8;
+    --suave: #b9c3dd; --ouro: #f2c14e; --ouro-escuro: #b8862a; --azul: #5aa9e6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--fundo); color: var(--texto);
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif; }
+  body { display: flex; align-items: center; justify-content: center; padding: 16px; min-height: 100vh;
+    background: radial-gradient(ellipse at top, #22386a 0%, var(--fundo) 65%); }
+  main { width: 100%; max-width: 520px; background: var(--cartao); border: 4px solid var(--borda);
+    border-radius: 14px; padding: 24px 22px; box-shadow: 0 10px 0 #07101f, 0 18px 40px rgba(0,0,0,.45); }
+  h1 { margin: 0 0 4px; font-size: 1.7rem; color: var(--ouro); letter-spacing: .5px; }
+  .sub { margin: 0 0 18px; color: var(--suave); }
+  ul { margin: 0 0 18px; padding-left: 20px; line-height: 1.6; }
+  .estado { background: rgba(0,0,0,.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 18px;
+    font-size: .95rem; color: var(--suave); min-height: 1.4em; }
+  .botoes { display: flex; flex-direction: column; gap: 10px; }
+  button, a.botao { font: inherit; font-size: 1.05rem; font-weight: bold; padding: 13px 16px; border-radius: 10px;
+    border: 3px solid var(--ouro-escuro); cursor: pointer; text-align: center; text-decoration: none;
+    transition: transform .12s ease, filter .12s ease; }
+  button:hover, a.botao:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  button:active, a.botao:active { transform: translateY(1px); }
+  button:focus-visible, a.botao:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .principal { background: var(--ouro); color: #2a1c05; }
+  .secundario { background: transparent; color: var(--texto); border-color: var(--suave); }
+  .aviso { margin-top: 16px; font-size: .85rem; color: var(--suave); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Jogo zerado</h1>
+  <p class="sub">Cristais de Lumen, para testar tudo sem jogar do começo.</p>
+  <ul>
+    <li>As 5 regiões vencidas, com todos os cristais acesos</li>
+    <li>Kael, Lina, Nara, Auriel e Irvyng no <strong>nível 16</strong></li>
+    <li>A Árvore toda comprada, os baús abertos, 9.999 de ouro</li>
+  </ul>
+  <div class="estado" id="estado" role="status"></div>
+  <div class="botoes">
+    <button class="principal" id="carregar" type="button">Carregar jogo zerado e jogar</button>
+    <button class="secundario" id="restaurar" type="button">Restaurar meu progresso</button>
+    <a class="botao secundario" href="./">Voltar ao jogo sem mudar nada</a>
+  </div>
+  <p class="aviso">Vale só para este aparelho e este navegador. O progresso que já existia aqui fica guardado e volta com “Restaurar meu progresso”.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var CHAVE = "CristaisdeLumen.0.CristaisdeLumen.0.lumen_remake_save.json";
+  var COPIA = CHAVE + ".antes_do_zerado";
+  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE2LCJ4cCI6MCwiaHAiOjk5OTksIm1wIjo5OTk5fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxNiwieHAiOjAsImhwIjo5OTk5LCJtcCI6OTk5OX0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9LHsiaWQiOiJhdXJpZWwiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9LHsiaWQiOiJpcnZ5bmciLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9XSwidGltZSI6WyJrYWVsIiwibGluYSIsIm5hcmEiXSwib3VybyI6OTk5OSwibHVtZW5zIjo5OSwiYXJ2b3JlIjp7ImthZWwiOlsiZ29scGVfZm9ydGUiLCJncml0b19jb3JhZ2VtIiwibXVyYWxoYSIsImthZWxfaHBfMSIsImNvcnRlX2dpcmF0b3JpbyIsImthZWxfYXRxXzEiLCJrYWVsX2F0cV8yIiwibGFtaW5hX2F1cm9yYSIsImthZWxfaHBfMiJdLCJsaW5hIjpbImNoYW1hIiwiamF0b19hZ3VhIiwicmFpb19jcmlzdGFsIiwiYmFycmVpcmFfZG91cmFkYSIsInZpbmhhc19lc3Bpbmhvc2FzIiwibGluYV9tYWdfMSIsIm1ldGVvcm8iLCJsaW5hX21wXzEiLCJvcmJlX3NvbWJyaW8iLCJzdXBlcm5vdmFfY3Jpc3RhbCJdLCJuYXJhIjpbImN1cmFyIiwiYnJpc2FfY3VyYXRpdmEiLCJpbnZvY2FyX3Vyc28iLCJvcnZhbGhvIiwicmV2aXZlciIsIm5hcmFfbWFnXzEiLCJyZXZvYWRhIiwibmFyYV9ocF8xIiwiZXNwaXJpdG9fY2Vydm8iLCJmbG9yZXNjZXIiXSwiYXVyaWVsIjpbImZsZWNoYV9kb3VyYWRhIiwiYmVuY2FvIiwiYmFycmVpcmFfYXVyaWVsIiwiYXVyaWVsX21hZ18xIiwianVsZ2FtZW50b19zdXBlcmlvciIsImxhbmNhX3NhZ3JhZGEiLCJhdXJpZWxfaHBfMSIsImp1aXpvX2FyY2Fuam9zIl0sImlydnluZyI6WyJlc2ZlcmFfZXN0ZWxhciIsInB1bmhvX2VzdGVsYXIiLCJlZ2lkZV9jZWxlc3RlIiwicmFpb19vcmJlIiwiaXJ2eW5nX21hZ18xIiwicXVlZGFfY29tZXRhIiwiY2lyY3Vsb19hc3RyYWwiLCJpcnZ5bmdfaHBfMSIsImNodXZhX2NvbnN0ZWxhY2FvIl19LCJiYXVzIjp7ImZsb3Jlc3RhIjpbdHJ1ZSx0cnVlXSwiY2F2ZXJuYSI6W3RydWUsdHJ1ZV0sImNhc3RlbG8iOlt0cnVlLHRydWVdLCJjYXRlZHJhbCI6W3RydWUsdHJ1ZV0sInRlbXBsb19lc3RlbGFyIjpbdHJ1ZSx0cnVlXX0sInJlY3J1dGFkb3MiOnsiYXVyaWVsIjp0cnVlLCJpcnZ5bmciOnRydWV9LCJpdGVucyI6eyJwb2NhbyI6OSwiZXRlciI6OSwicGVuYSI6OSwiZXNiZXJ1cyI6OX0sInJlZ2lvZXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZX0sInZlbmNpZGFzIjp7ImZsb3Jlc3RhIjp0cnVlLCJjYXZlcm5hIjp0cnVlLCJjYXN0ZWxvIjp0cnVlLCJjYXRlZHJhbCI6dHJ1ZSwidGVtcGxvX2VzdGVsYXIiOnRydWV9LCJ0ZW1wb19qb2dvIjoxODAwMCwiZXNwZWNpYWwiOlsxMDAsMTAwLDEwMCwxMDAsMTAwXX0A";
+
+  var estado = document.getElementById("estado");
+
+  function ler(chave) {
+    try { return window.localStorage.getItem(chave); } catch (e) { return null; }
+  }
+  function gravar(chave, valor) {
+    try { window.localStorage.setItem(chave, valor); return true; } catch (e) { return false; }
+  }
+  function apagar(chave) {
+    try { window.localStorage.removeItem(chave); } catch (e) { /* sem acesso: nada a apagar */ }
+  }
+  function mostrar(texto) { estado.textContent = texto; }
+
+  function atualizar() {
+    var atual = ler(CHAVE), copia = ler(COPIA);
+    if (atual === SAVE_B64) {
+      mostrar(copia ? "Este aparelho já está com o jogo zerado. O seu progresso antigo está guardado."
+                    : "Este aparelho já está com o jogo zerado.");
+    } else if (atual) {
+      mostrar("Este aparelho tem um progresso salvo. Ele fica guardado se você carregar o jogo zerado.");
+    } else {
+      mostrar(copia ? "Sem jogo salvo agora, mas há um progresso antigo guardado."
+                    : "Este aparelho ainda não tem jogo salvo.");
+    }
+    document.getElementById("restaurar").disabled = !copia;
+  }
+
+  document.getElementById("carregar").addEventListener("click", function () {
+    var atual = ler(CHAVE);
+    // guarda o progresso de verdade uma vez so: carregar de novo nao apaga a copia
+    if (atual && atual !== SAVE_B64 && !ler(COPIA) && !gravar(COPIA, atual)) {
+      mostrar("Não consegui guardar o progresso atual (o navegador bloqueou o armazenamento). Nada foi mudado.");
+      return;
+    }
+    if (!gravar(CHAVE, SAVE_B64)) {
+      mostrar("O navegador não deixou gravar o save (modo anônimo ou armazenamento bloqueado).");
+      return;
+    }
+    mostrar("Pronto! Abrindo o jogo… escolha “Continuar”.");
+    window.location.href = "./";
+  });
+
+  document.getElementById("restaurar").addEventListener("click", function () {
+    var copia = ler(COPIA);
+    if (!copia) { mostrar("Não há progresso antigo guardado neste aparelho."); atualizar(); return; }
+    if (!gravar(CHAVE, copia)) { mostrar("O navegador não deixou restaurar. Nada foi mudado."); return; }
+    apagar(COPIA);
+    mostrar("Progresso restaurado. Abrindo o jogo…");
+    window.location.href = "./";
+  });
+
+  atualizar();
+})();
+</script>
+</body>
+</html>
