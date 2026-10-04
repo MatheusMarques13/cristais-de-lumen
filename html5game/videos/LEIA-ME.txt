@@ -1,6 +1,6 @@
 Curtas dos Especiais (CINEMATICA.md 7).
 
-ult_<heroi>.mp4           -> o Especial do heroi toca este video (kael, lina, nara, irvyng)
+ult_<heroi>.mp4           -> o Especial do heroi toca este video (kael, lina, nara, irvyng, tayia, josaph, algaz)
 ult_auriel_<letra>.mp4    -> Auriel, um por arcanjo: a = Miguel, b = Gabriel, c = Rafael, d = Uriel
 ult_<...>.json (opcional) -> marcas de tempo: nome do golpe, impacto, sons, volume
 

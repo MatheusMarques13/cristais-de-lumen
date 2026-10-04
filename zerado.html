@@ -6,14 +6,15 @@
 <title>Cristais de Lumen · jogo zerado</title>
 <!--
   Pagina de teste do professor (02/10/2026): grava no navegador um save do jogo
-  ZERADO (as 5 regioes vencidas, os 5 herois no nivel 16, a Arvore toda comprada,
-  baus abertos) e abre o jogo. O progresso que ja existia neste aparelho fica
-  guardado e volta com "Restaurar meu progresso".
+  ZERADO (todas as regioes vencidas, todos os herois no nivel 16, a Arvore toda
+  comprada, baus abertos) e abre o jogo. O progresso que ja existia neste
+  aparelho fica guardado e volta com "Restaurar meu progresso".
 
-  O save e o do build publicado em 28/09 (Kael, Lina, Nara, Auriel, Irvyng;
-  floresta, caverna, castelo, catedral, templo_estelar). Fonte legivel:
-  saves_teste/save_zerado_web_2809.json. Quando o build novo for publicado
-  (Mercanteaus, Faialis, Chiaroscuro, Algaz, Tayia, Josaph), refazer o save.
+  O SAVE_B64 e a lista abaixo NAO se editam a mao: saem de
+  `python3 ferramentas/montar_save_zerado.py` (03/10/2026), que le as tabelas
+  do codigo de hoje, valida o save no _save_validar de verdade e grava aqui.
+  Heroi ou regiao nova: rodar de novo. Fonte legivel:
+  saves_teste/save_zerado_web.json.
 
   Onde o GameMaker HTML5 guarda arquivo: localStorage[prefixo + game_save_id +
   nome], prefixo = nome do jogo sem simbolos + "." + game_id + "." (medido no
@@ -54,11 +55,13 @@
 <main>
   <h1>Jogo zerado</h1>
   <p class="sub">Cristais de Lumen, para testar tudo sem jogar do começo.</p>
-  <ul>
-    <li>As 5 regiões vencidas, com todos os cristais acesos</li>
-    <li>Kael, Lina, Nara, Auriel e Irvyng no <strong>nível 16</strong></li>
-    <li>A Árvore toda comprada, os baús abertos, 9.999 de ouro</li>
-  </ul>
+  <ul><!--zerado:lista-->
+    <li>As 8 regiões vencidas, com todos os cristais acesos: Floresta Verdejante, Caverna de Cristal, Castelo Sombrio, Catedral de Aurora, Ruínas do Templo Estelar, Mercanteaus, Ilha Faialis e Chiaroscuro Lumina</li>
+    <li>Os 8 heróis no <strong>nível 16</strong>: Kael, Lina, Nara, Auriel, Irvyng, Tayia, Josaph e Algaz</li>
+    <li>No time: Tayia, Josaph e Algaz (troque na aba Time do mapa)</li>
+    <li>A Árvore toda comprada, a barra do Especial cheia, os baús abertos, 9.999 de ouro</li>
+    <li>Os chefes do meio do caminho continuam lá para lutar: Marceas, Leviatã Maior, Marmellia, Tempestara e Bifronte</li>
+  <!--/zerado:lista--></ul>
   <div class="estado" id="estado" role="status"></div>
   <div class="botoes">
     <button class="principal" id="carregar" type="button">Carregar jogo zerado e jogar</button>
@@ -72,7 +75,7 @@
   "use strict";
   var CHAVE = "CristaisdeLumen.0.CristaisdeLumen.0.lumen_remake_save.json";
   var COPIA = CHAVE + ".antes_do_zerado";
-  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE2LCJ4cCI6MCwiaHAiOjk5OTksIm1wIjo5OTk5fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxNiwieHAiOjAsImhwIjo5OTk5LCJtcCI6OTk5OX0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9LHsiaWQiOiJhdXJpZWwiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9LHsiaWQiOiJpcnZ5bmciLCJuaXZlbCI6MTYsInhwIjowLCJocCI6OTk5OSwibXAiOjk5OTl9XSwidGltZSI6WyJrYWVsIiwibGluYSIsIm5hcmEiXSwib3VybyI6OTk5OSwibHVtZW5zIjo5OSwiYXJ2b3JlIjp7ImthZWwiOlsiZ29scGVfZm9ydGUiLCJncml0b19jb3JhZ2VtIiwibXVyYWxoYSIsImthZWxfaHBfMSIsImNvcnRlX2dpcmF0b3JpbyIsImthZWxfYXRxXzEiLCJrYWVsX2F0cV8yIiwibGFtaW5hX2F1cm9yYSIsImthZWxfaHBfMiJdLCJsaW5hIjpbImNoYW1hIiwiamF0b19hZ3VhIiwicmFpb19jcmlzdGFsIiwiYmFycmVpcmFfZG91cmFkYSIsInZpbmhhc19lc3Bpbmhvc2FzIiwibGluYV9tYWdfMSIsIm1ldGVvcm8iLCJsaW5hX21wXzEiLCJvcmJlX3NvbWJyaW8iLCJzdXBlcm5vdmFfY3Jpc3RhbCJdLCJuYXJhIjpbImN1cmFyIiwiYnJpc2FfY3VyYXRpdmEiLCJpbnZvY2FyX3Vyc28iLCJvcnZhbGhvIiwicmV2aXZlciIsIm5hcmFfbWFnXzEiLCJyZXZvYWRhIiwibmFyYV9ocF8xIiwiZXNwaXJpdG9fY2Vydm8iLCJmbG9yZXNjZXIiXSwiYXVyaWVsIjpbImZsZWNoYV9kb3VyYWRhIiwiYmVuY2FvIiwiYmFycmVpcmFfYXVyaWVsIiwiYXVyaWVsX21hZ18xIiwianVsZ2FtZW50b19zdXBlcmlvciIsImxhbmNhX3NhZ3JhZGEiLCJhdXJpZWxfaHBfMSIsImp1aXpvX2FyY2Fuam9zIl0sImlydnluZyI6WyJlc2ZlcmFfZXN0ZWxhciIsInB1bmhvX2VzdGVsYXIiLCJlZ2lkZV9jZWxlc3RlIiwicmFpb19vcmJlIiwiaXJ2eW5nX21hZ18xIiwicXVlZGFfY29tZXRhIiwiY2lyY3Vsb19hc3RyYWwiLCJpcnZ5bmdfaHBfMSIsImNodXZhX2NvbnN0ZWxhY2FvIl19LCJiYXVzIjp7ImZsb3Jlc3RhIjpbdHJ1ZSx0cnVlXSwiY2F2ZXJuYSI6W3RydWUsdHJ1ZV0sImNhc3RlbG8iOlt0cnVlLHRydWVdLCJjYXRlZHJhbCI6W3RydWUsdHJ1ZV0sInRlbXBsb19lc3RlbGFyIjpbdHJ1ZSx0cnVlXX0sInJlY3J1dGFkb3MiOnsiYXVyaWVsIjp0cnVlLCJpcnZ5bmciOnRydWV9LCJpdGVucyI6eyJwb2NhbyI6OSwiZXRlciI6OSwicGVuYSI6OSwiZXNiZXJ1cyI6OX0sInJlZ2lvZXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZX0sInZlbmNpZGFzIjp7ImZsb3Jlc3RhIjp0cnVlLCJjYXZlcm5hIjp0cnVlLCJjYXN0ZWxvIjp0cnVlLCJjYXRlZHJhbCI6dHJ1ZSwidGVtcGxvX2VzdGVsYXIiOnRydWV9LCJ0ZW1wb19qb2dvIjoxODAwMCwiZXNwZWNpYWwiOlsxMDAsMTAwLDEwMCwxMDAsMTAwXX0A";
+  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE2LCJ4cCI6MCwiaHAiOjIxMSwibXAiOjI1fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxNiwieHAiOjAsImhwIjoxMTMsIm1wIjo5Nn0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6MTQzLCJtcCI6NzF9LHsiaWQiOiJhdXJpZWwiLCJuaXZlbCI6MTYsInhwIjowLCJocCI6MTQ2LCJtcCI6Njl9LHsiaWQiOiJpcnZ5bmciLCJuaXZlbCI6MTYsInhwIjowLCJocCI6MTQyLCJtcCI6NzN9LHsiaWQiOiJ0YXlpYSIsIm5pdmVsIjoxNiwieHAiOjAsImhwIjoxNTUsIm1wIjo2N30seyJpZCI6Impvc2FwaCIsIm5pdmVsIjoxNiwieHAiOjAsImhwIjoxNDAsIm1wIjo5OH0seyJpZCI6ImFsZ2F6Iiwibml2ZWwiOjE2LCJ4cCI6MCwiaHAiOjE0NCwibXAiOjcxfV0sInRpbWUiOlsidGF5aWEiLCJqb3NhcGgiLCJhbGdheiJdLCJvdXJvIjo5OTk5LCJsdW1lbnMiOjk5LCJhcnZvcmUiOnsia2FlbCI6WyJnb2xwZV9mb3J0ZSIsImdyaXRvX2NvcmFnZW0iLCJtdXJhbGhhIiwia2FlbF9ocF8xIiwiY29ydGVfZ2lyYXRvcmlvIiwia2FlbF9hdHFfMSIsImthZWxfYXRxXzIiLCJsYW1pbmFfYXVyb3JhIiwia2FlbF9ocF8yIl0sImxpbmEiOlsiY2hhbWEiLCJqYXRvX2FndWEiLCJyYWlvX2NyaXN0YWwiLCJiYXJyZWlyYV9kb3VyYWRhIiwidmluaGFzX2VzcGluaG9zYXMiLCJsaW5hX21hZ18xIiwibWV0ZW9ybyIsImxpbmFfbXBfMSIsIm9yYmVfc29tYnJpbyIsInN1cGVybm92YV9jcmlzdGFsIl0sIm5hcmEiOlsiY3VyYXIiLCJicmlzYV9jdXJhdGl2YSIsImludm9jYXJfdXJzbyIsIm9ydmFsaG8iLCJyZXZpdmVyIiwibmFyYV9tYWdfMSIsInJldm9hZGEiLCJuYXJhX2hwXzEiLCJlc3Bpcml0b19jZXJ2byIsImZsb3Jlc2NlciJdLCJhdXJpZWwiOlsiZmxlY2hhX2RvdXJhZGEiLCJiZW5jYW8iLCJiYXJyZWlyYV9hdXJpZWwiLCJhdXJpZWxfbWFnXzEiLCJqdWxnYW1lbnRvX3N1cGVyaW9yIiwibGFuY2Ffc2FncmFkYSIsImF1cmllbF9ocF8xIiwianVpem9fYXJjYW5qb3MiXSwiaXJ2eW5nIjpbImVzZmVyYV9lc3RlbGFyIiwicHVuaG9fZXN0ZWxhciIsImVnaWRlX2NlbGVzdGUiLCJyYWlvX29yYmUiLCJpcnZ5bmdfbWFnXzEiLCJxdWVkYV9jb21ldGEiLCJjaXJjdWxvX2FzdHJhbCIsImlydnluZ19ocF8xIiwiY2h1dmFfY29uc3RlbGFjYW8iXSwidGF5aWEiOlsibGFtaW5hX3B1bmhvIiwicGlsYXJfZm9nbyIsImVueGFtZV9icmFzYXMiLCJwYXJlZGVfZm9nbyIsInRheWlhX21hZ18xIiwib3JiZV9ydWJyYSIsImdvbGVuc19sYXZhIiwidGF5aWFfYXRxXzEiLCJmZW5peF9mb2dvIiwiZGVzcGVydGFyX3NvbCJdLCJqb3NhcGgiOlsibWltaWNhIiwibXVyYWxoYV9hcmNvX2lyaXMiLCJqb3NhcGhfbWFnXzEiLCJpbnN0aW50b19taW1pY28iLCJqb3NhcGhfaHBfMSIsImJpcyIsImpvc2FwaF9tcF8xIiwiam9zYXBoX21hZ18yIiwiYXRvX2ZpbmFsIl0sImFsZ2F6IjpbInRlcnJlbW90b19hYmlzc2FsIiwibWV0ZW9yb3NfbWFyZSIsImRyYWdhb19hZ3VhIiwiYm9saGFfZ3VhcmRpYSIsImJvbGhhc19oZXJkZWlybyIsImFsZ2F6X21hZ18xIiwicmVsYW1wYWdvX21hciIsImFsZ2F6X2hwXzEiLCJjYXZhbG9fbWFyaW5ob19naWdhbnRlIiwiZGVzcGVydGFyX29jZWFubyJdfSwiYmF1cyI6eyJmbG9yZXN0YSI6W3RydWUsdHJ1ZV0sImNhdmVybmEiOlt0cnVlLHRydWVdLCJjYXN0ZWxvIjpbdHJ1ZSx0cnVlXSwiY2F0ZWRyYWwiOlt0cnVlLHRydWVdLCJ0ZW1wbG9fZXN0ZWxhciI6W3RydWUsdHJ1ZV0sIm1lcmNhbnRlYXVzIjpbdHJ1ZSx0cnVlLHRydWUsdHJ1ZV0sImZhaWFsaXMiOlt0cnVlLHRydWUsdHJ1ZV0sImNoaWFyb3NjdXJvIjpbdHJ1ZSx0cnVlLHRydWVdfSwicmVjcnV0YWRvcyI6eyJhdXJpZWwiOnRydWUsImlydnluZyI6dHJ1ZSwidGF5aWEiOnRydWUsImpvc2FwaCI6dHJ1ZSwiYWxnYXoiOnRydWV9LCJpdGVucyI6eyJwb2NhbyI6OSwiZXRlciI6OSwicGVuYSI6OSwiZXNiZXJ1cyI6OX0sInJlZ2lvZXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZSwibWVyY2FudGVhdXMiOnRydWUsImZhaWFsaXMiOnRydWUsImNoaWFyb3NjdXJvIjp0cnVlfSwidmVuY2lkYXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZSwibWVyY2FudGVhdXMiOnRydWUsImZhaWFsaXMiOnRydWUsImNoaWFyb3NjdXJvIjp0cnVlfSwibWFyY29zIjp7InRlbXBsb19lc3RlbGFyIjpbImxldmlhdGEiXSwiY2hpYXJvc2N1cm8iOlsiam9zYXBoIl19LCJ0ZW1wb19qb2dvIjoyODgwMCwiZXNwZWNpYWwiOlsxMDAsMTAwLDEwMCwxMDAsMTAwLDEwMCwxMDAsMTAwXX0A";
 
   var estado = document.getElementById("estado");
 
