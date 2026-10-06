@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cristais de Lumen · Vicente</title>
+<!--
+  Save do Vicente (pedido do professor, 06/10/2026): Floresta, Caverna,
+  Castelo e Catedral vencidas, as Ruinas do Templo Estelar abertas com o
+  Leviata esperando no fim, o Irvyng no time e SEM o Anel (ele vence o Leviata,
+  ganha o Anel e abre Mercanteaus).
+
+  O SAVE_B64 NAO se edita a mao: sai de `python3 ferramentas/montar_save_vicente.py`
+  (valida no _save_validar de verdade). Fonte legivel: saves_teste/save_vicente.json.
+
+  Onde o GameMaker HTML5 guarda arquivo: localStorage[prefixo + nome], prefixo
+  medido no jogo publicado: "CristaisdeLumen.0.CristaisdeLumen.0.". O Espaco 1 e
+  lumen_remake_save.json; os outros, lumen_remake_save_N.json (scr_save.gml).
+  A pagina grava no PRIMEIRO espaco vazio deste aparelho; com os 3 ocupados,
+  usa o Espaco 3 e guarda o que estava la (volta com "Desfazer").
+-->
+<style>
+  :root {
+    --fundo: #0e1a33; --cartao: #1b2c52; --borda: #8a6a3c; --texto: #f4ecd8;
+    --suave: #b9c3dd; --ouro: #f2c14e; --ouro-escuro: #b8862a; --azul: #5aa9e6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--fundo); color: var(--texto);
+    font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif; }
+  body { display: flex; align-items: center; justify-content: center; padding: 16px; min-height: 100vh;
+    background: radial-gradient(ellipse at top, #22386a 0%, var(--fundo) 65%); }
+  main { width: 100%; max-width: 520px; background: var(--cartao); border: 4px solid var(--borda);
+    border-radius: 14px; padding: 24px 22px; box-shadow: 0 10px 0 #07101f, 0 18px 40px rgba(0,0,0,.45); }
+  h1 { margin: 0 0 4px; font-size: 1.9rem; color: var(--ouro); letter-spacing: .5px; }
+  .sub { margin: 0 0 18px; color: var(--suave); }
+  ul { margin: 0 0 18px; padding-left: 20px; line-height: 1.6; }
+  .estado { background: rgba(0,0,0,.25); border-radius: 10px; padding: 10px 12px; margin-bottom: 18px;
+    font-size: .95rem; color: var(--suave); min-height: 1.4em; }
+  .estado strong { color: var(--ouro); }
+  .botoes { display: flex; flex-direction: column; gap: 10px; }
+  button, a.botao { font: inherit; font-size: 1.05rem; font-weight: bold; padding: 13px 16px; border-radius: 10px;
+    border: 3px solid var(--ouro-escuro); cursor: pointer; text-align: center; text-decoration: none;
+    transition: transform .12s ease, filter .12s ease; }
+  button:hover, a.botao:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  button:active, a.botao:active { transform: translateY(1px); }
+  button:focus-visible, a.botao:focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  button:disabled { opacity: .4; cursor: not-allowed; filter: none; transform: none; }
+  .principal { background: var(--ouro); color: #2a1c05; }
+  .secundario { background: transparent; color: var(--texto); border-color: var(--suave); }
+  .aviso { margin-top: 16px; font-size: .85rem; color: var(--suave); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Jogo do Vicente</h1>
+  <p class="sub">Cristais de Lumen: a aventura continua nas Ruínas do Templo Estelar.</p>
+  <ul>
+    <li>Floresta, Caverna, Castelo e Catedral vencidas, com os cristais acesos</li>
+    <li><strong>Irvyng</strong> já está no time, junto com Lina e Kael, todos no nível 15</li>
+    <li>O <strong>Leviatã</strong> espera no fim das Ruínas: vença ele para ganhar o <strong>Anel do Rei Abissal</strong> e abrir o caminho para Mercanteaus</li>
+  </ul>
+  <div class="estado" id="estado" role="status"></div>
+  <div class="botoes">
+    <button class="principal" id="carregar" type="button">Colocar o jogo do Vicente e jogar</button>
+    <button class="secundario" id="desfazer" type="button">Desfazer (voltar o que estava neste espaço)</button>
+    <a class="botao secundario" href="./">Abrir o jogo sem mudar nada</a>
+  </div>
+  <p class="aviso">Vale só para este aparelho e este navegador. Abra este link uma vez em cada aparelho em que o Vicente for jogar. Nenhum jogo salvo de outra pessoa é apagado.</p>
+</main>
+<script>
+(function () {
+  "use strict";
+  var PREFIXO = "CristaisdeLumen.0.CristaisdeLumen.0.";
+  var ESPACOS = 3;
+  var GUARDADO = PREFIXO + "vicente.espaco";          // em qual espaco a pagina pos o save
+  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE1LCJ4cCI6MCwiaHAiOjIwMiwibXAiOjI0fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxNSwieHAiOjAsImhwIjoxMDgsIm1wIjo5Mn0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTM3LCJtcCI6Njh9LHsiaWQiOiJhdXJpZWwiLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTQwLCJtcCI6NjZ9LHsiaWQiOiJpcnZ5bmciLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTM2LCJtcCI6NzB9XSwidGltZSI6WyJpcnZ5bmciLCJsaW5hIiwia2FlbCJdLCJvdXJvIjo2MDAsImx1bWVucyI6NDAsImFydm9yZSI6eyJrYWVsIjpbImdvbHBlX2ZvcnRlIiwiZ3JpdG9fY29yYWdlbSIsIm11cmFsaGEiLCJrYWVsX2hwXzEiLCJjb3J0ZV9naXJhdG9yaW8iLCJrYWVsX2F0cV8xIiwia2FlbF9hdHFfMiIsImxhbWluYV9hdXJvcmEiLCJrYWVsX2hwXzIiXSwibGluYSI6WyJjaGFtYSIsImphdG9fYWd1YSIsInJhaW9fY3Jpc3RhbCIsImJhcnJlaXJhX2RvdXJhZGEiLCJ2aW5oYXNfZXNwaW5ob3NhcyIsImxpbmFfbWFnXzEiLCJtZXRlb3JvIiwibGluYV9tcF8xIiwib3JiZV9zb21icmlvIiwic3VwZXJub3ZhX2NyaXN0YWwiXSwibmFyYSI6WyJjdXJhciIsImJyaXNhX2N1cmF0aXZhIiwiaW52b2Nhcl91cnNvIiwib3J2YWxobyIsInJldml2ZXIiLCJuYXJhX21hZ18xIiwicmV2b2FkYSIsIm5hcmFfaHBfMSIsImVzcGlyaXRvX2NlcnZvIiwiZmxvcmVzY2VyIl0sImF1cmllbCI6WyJmbGVjaGFfZG91cmFkYSIsImJlbmNhbyIsImJhcnJlaXJhX2F1cmllbCIsImF1cmllbF9tYWdfMSIsImp1bGdhbWVudG9fc3VwZXJpb3IiLCJsYW5jYV9zYWdyYWRhIiwiYXVyaWVsX2hwXzEiLCJqdWl6b19hcmNhbmpvcyJdLCJpcnZ5bmciOlsiZXNmZXJhX2VzdGVsYXIiLCJwdW5ob19lc3RlbGFyIiwiZWdpZGVfY2VsZXN0ZSIsInJhaW9fb3JiZSIsImlydnluZ19tYWdfMSIsInF1ZWRhX2NvbWV0YSIsImNpcmN1bG9fYXN0cmFsIiwiaXJ2eW5nX2hwXzEiLCJjaHV2YV9jb25zdGVsYWNhbyJdfSwiYmF1cyI6eyJmbG9yZXN0YSI6W3RydWUsdHJ1ZV0sImNhdmVybmEiOlt0cnVlLHRydWVdLCJjYXN0ZWxvIjpbdHJ1ZSx0cnVlXSwiY2F0ZWRyYWwiOlt0cnVlLHRydWVdfSwicmVjcnV0YWRvcyI6eyJhdXJpZWwiOnRydWUsImlydnluZyI6dHJ1ZSwidGF5aWEiOmZhbHNlLCJqb3NhcGgiOmZhbHNlLCJhbGdheiI6ZmFsc2V9LCJpdGVucyI6eyJwb2NhbyI6NSwiZXRlciI6MywicGVuYSI6MiwiZXNiZXJ1cyI6Mn0sInJlZ2lvZXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZSwibWVyY2FudGVhdXMiOmZhbHNlLCJmYWlhbGlzIjpmYWxzZSwiY2hpYXJvc2N1cm8iOmZhbHNlfSwidmVuY2lkYXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6ZmFsc2UsIm1lcmNhbnRlYXVzIjpmYWxzZSwiZmFpYWxpcyI6ZmFsc2UsImNoaWFyb3NjdXJvIjpmYWxzZX0sIm1hcmNvcyI6e30sInRlbXBvX2pvZ28iOjU0MDAuMCwiZXNwZWNpYWwiOlsxMDAsMTAwLDEwMCwxMDAsMTAwXX0A";
+
+  var estado = document.getElementById("estado");
+
+  function chave(n) { return PREFIXO + (n === 1 ? "lumen_remake_save.json" : "lumen_remake_save_" + n + ".json"); }
+  function ler(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function gravar(k, v) { try { window.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function apagar(k) { try { window.localStorage.removeItem(k); } catch (e) { /* sem acesso */ } }
+  function mostrar(html) { estado.innerHTML = html; }
+
+  function espacoDoVicente() {
+    for (var n = 1; n <= ESPACOS; n++) if (ler(chave(n)) === SAVE_B64) return n;
+    return 0;
+  }
+  function primeiroVazio() {
+    for (var n = 1; n <= ESPACOS; n++) if (!ler(chave(n))) return n;
+    return 0;
+  }
+
+  function atualizar() {
+    var n = espacoDoVicente();
+    var desfazivel = !!ler(GUARDADO);
+    if (n) {
+      mostrar("O jogo do Vicente já está neste aparelho, no <strong>Espaço " + n + "</strong>.");
+    } else {
+      var v = primeiroVazio();
+      mostrar(v ? "O jogo do Vicente vai para o <strong>Espaço " + v + "</strong>, que está vazio."
+                : "Os 3 espaços estão ocupados. O jogo do Vicente vai para o <strong>Espaço 3</strong> e o que está lá fica guardado.");
+    }
+    document.getElementById("desfazer").disabled = !desfazivel;
+  }
+
+  document.getElementById("carregar").addEventListener("click", function () {
+    var n = espacoDoVicente();
+    if (!n) {
+      n = primeiroVazio() || ESPACOS;
+      var antes = ler(chave(n));
+      if (!gravar(GUARDADO, JSON.stringify({ espaco: n, antes: antes }))) {
+        mostrar("O navegador não deixou gravar (modo anônimo ou armazenamento bloqueado). Nada foi mudado.");
+        return;
+      }
+      if (!gravar(chave(n), SAVE_B64)) {
+        apagar(GUARDADO);
+        mostrar("O navegador não deixou gravar o jogo. Nada foi mudado.");
+        return;
+      }
+    }
+    mostrar("Pronto! Abrindo o jogo… escolha <strong>Continuar</strong> e o <strong>Espaço " + n + "</strong>.");
+    window.setTimeout(function () { window.location.href = "./"; }, 1800);
+  });
+
+  document.getElementById("desfazer").addEventListener("click", function () {
+    var g = null;
+    try { g = JSON.parse(ler(GUARDADO) || "null"); } catch (e) { g = null; }
+    if (!g || !g.espaco) { mostrar("Não há nada para desfazer neste aparelho."); atualizar(); return; }
+    var ok = g.antes ? gravar(chave(g.espaco), g.antes) : (apagar(chave(g.espaco)), true);
+    if (!ok) { mostrar("O navegador não deixou desfazer. Nada foi mudado."); return; }
+    apagar(GUARDADO);
+    mostrar("Desfeito: o <strong>Espaço " + g.espaco + "</strong> voltou a ser como era.");
+    atualizar();
+  });
+
+  atualizar();
+})();
+</script>
+</body>
+</html>
