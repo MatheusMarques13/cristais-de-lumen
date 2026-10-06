@@ -67,7 +67,7 @@
   <div class="botoes">
     <button class="principal" id="carregar" type="button">Carregar jogo zerado e jogar</button>
     <button class="secundario" id="restaurar" type="button">Restaurar meu progresso</button>
-    <a class="botao secundario" href="./">Voltar ao jogo sem mudar nada</a>
+    <a class="botao secundario" href="./jogo/">Voltar ao jogo sem mudar nada</a>
   </div>
   <p class="aviso">Vale só para este aparelho e este navegador. O progresso que já existia aqui fica guardado e volta com “Restaurar meu progresso”.</p>
 </main>
@@ -117,7 +117,7 @@
       return;
     }
     mostrar("Pronto! Abrindo o jogo… escolha “Continuar” (e o “Espaço 1”, se o jogo perguntar).");
-    window.location.href = "./";
+    window.location.href = "./jogo/";
   });
 
   document.getElementById("restaurar").addEventListener("click", function () {
@@ -126,7 +126,7 @@
     if (!gravar(CHAVE, copia)) { mostrar("O navegador não deixou restaurar. Nada foi mudado."); return; }
     apagar(COPIA);
     mostrar("Progresso restaurado. Abrindo o jogo…");
-    window.location.href = "./";
+    window.location.href = "./jogo/";
   });
 
   atualizar();

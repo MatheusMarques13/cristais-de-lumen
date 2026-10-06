@@ -1,144 +1,290 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cristais de Lumen</title>
+<meta name="description" content="Cristais de Lumen: um RPG de aventura feito à mão. Jogue no navegador, no computador ou no tablet.">
+<meta property="og:title" content="Cristais de Lumen">
+<meta property="og:description" content="Acenda os cristais e traga a luz de volta ao reino. Jogue no navegador.">
+<meta property="og:image" content="https://matheusmarques13.github.io/cristais-de-lumen/capa.jpg">
+<meta name="theme-color" content="#0e1a33">
+<link rel="icon" href="jogo/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<!--
+  Launcher do Cristais de Lumen (06/10/2026). Mora na raiz do site; o jogo
+  (build HTML5 do GameMaker) mora em ./jogo/. Os jogos salvos ficam no
+  localStorage DESTE site (mesma origem do jogo), um por aparelho/navegador:
+  CristaisdeLumen.0.CristaisdeLumen.0.lumen_remake_save[_N].json, valor =
+  base64 do JSON + "\0" (medido no jogo publicado). Daqui o jogador ve os 3
+  espacos, baixa uma copia dos jogos para o aparelho e carrega de volta.
+  Fonte: ferramentas/web/launcher.html (o publicar_web.py copia como index.html).
+-->
+<style>
+  :root {
+    --noite: #0b1430; --noite2: #13224a; --cartao: rgba(20, 34, 72, .82); --borda: #b98b47;
+    --ouro: #f2c14e; --ouro2: #ffe7a3; --texto: #f6efdc; --suave: #b9c3dd; --azul: #6cc4ff; --erro: #ff9b8a;
+    --raio: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; background: var(--noite); color: var(--texto); }
+  body { font-family: "Nunito", "Trebuchet MS", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% -5%, rgba(108,196,255,.28), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 85% 110%, rgba(242,193,78,.18), transparent 70%),
+      linear-gradient(180deg, var(--noite2), var(--noite) 70%); }
+  .ceu { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .ceu i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: .0;
+    animation: brilho 5s ease-in-out infinite; }
+  @keyframes brilho { 0%, 100% { opacity: 0 } 50% { opacity: .9 } }
+  .capa { position: fixed; inset: 0; background: url("capa.jpg") center 30% / cover no-repeat; opacity: .22;
+    mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.6) 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.6) 55%, transparent 100%); }
+  main { position: relative; max-width: 980px; margin: 0 auto; padding: clamp(28px, 6vh, 64px) 18px 48px;
+    display: grid; gap: 26px; }
+  header { text-align: center; }
+  .cristal { width: 64px; height: 64px; margin: 0 auto 6px; filter: drop-shadow(0 0 18px rgba(108,196,255,.75));
+    animation: flutua 4s ease-in-out infinite; }
+  @keyframes flutua { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+  h1 { font-family: "Cinzel Decorative", Georgia, serif; font-size: clamp(2.3rem, 7vw, 4.6rem); margin: 0;
+    line-height: 1.05; color: var(--ouro2); letter-spacing: .5px;
+    text-shadow: 0 2px 0 #7a5420, 0 6px 22px rgba(242,193,78,.45); }
+  .lema { margin: 10px 0 0; color: var(--suave); font-size: clamp(1rem, 2.4vw, 1.2rem); }
+  .jogar { display: inline-flex; align-items: center; gap: 12px; margin-top: 24px; padding: 18px 46px;
+    font: 800 1.35rem "Nunito", sans-serif; color: #2a1a03; text-decoration: none; cursor: pointer;
+    background: linear-gradient(180deg, var(--ouro2), var(--ouro) 55%, #d99a2b); border: 3px solid #fff2c9;
+    border-radius: 999px; box-shadow: 0 8px 0 #8a5d1c, 0 14px 34px rgba(242,193,78,.4);
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease; }
+  .jogar:hover { filter: brightness(1.06); transform: translateY(-2px); }
+  .jogar:active { transform: translateY(5px); box-shadow: 0 3px 0 #8a5d1c, 0 8px 18px rgba(242,193,78,.35); }
+  .jogar:focus-visible, button:focus-visible, label.botao:focus-within { outline: 3px solid var(--azul); outline-offset: 3px; }
+  .dica { margin: 14px 0 0; color: var(--suave); font-size: .92rem; }
+  section.cartao { background: var(--cartao); border: 2px solid var(--borda); border-radius: var(--raio);
+    padding: 22px clamp(16px, 3vw, 28px); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 10px 0 rgba(5,10,25,.55), 0 20px 50px rgba(0,0,0,.35); }
+  h2 { margin: 0 0 4px; font-family: "Cinzel Decorative", Georgia, serif; font-size: 1.35rem; color: var(--ouro); }
+  .sub { margin: 0 0 18px; color: var(--suave); font-size: .95rem; }
+  .espacos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .espaco { border-radius: 12px; padding: 16px; background: rgba(8,14,34,.55); border: 1.5px solid rgba(185,139,71,.55);
+    display: grid; gap: 6px; min-height: 132px; }
+  .espaco.vazio { border-style: dashed; opacity: .78; }
+  .espaco .nome { font-weight: 800; color: var(--ouro2); font-size: 1.05rem; }
+  .espaco .linha { color: var(--texto); font-size: .95rem; }
+  .espaco .fraco { color: var(--suave); font-size: .88rem; }
+  .gemas { display: flex; gap: 4px; margin-top: 4px; }
+  .gemas b { width: 13px; height: 13px; transform: rotate(45deg); border-radius: 2px; background: rgba(185,195,221,.22); }
+  .gemas b.acesa { background: linear-gradient(135deg, #bff0ff, var(--azul)); box-shadow: 0 0 8px rgba(108,196,255,.9); }
+  .acoes { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  button, label.botao { font: 700 1rem "Nunito", sans-serif; padding: 11px 18px; border-radius: 10px; cursor: pointer;
+    color: var(--texto); background: rgba(255,255,255,.06); border: 2px solid var(--suave);
+    transition: background .12s ease, transform .12s ease; display: inline-flex; align-items: center; gap: 8px; }
+  button:hover, label.botao:hover { background: rgba(255,255,255,.13); transform: translateY(-1px); }
+  button:active, label.botao:active { transform: translateY(1px); }
+  label.botao input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .estado { margin-top: 14px; min-height: 1.4em; font-size: .95rem; color: var(--suave); }
+  .estado.ok { color: #9ff0b5; } .estado.erro { color: var(--erro); }
+  .grade2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .grade2 p { margin: 0 0 8px; color: var(--suave); line-height: 1.55; }
+  .grade2 strong { color: var(--texto); }
+  .quadro { margin: 0; border-radius: var(--raio); overflow: hidden; border: 3px solid var(--borda);
+    box-shadow: 0 10px 0 rgba(5,10,25,.55), 0 24px 60px rgba(0,0,0,.45); background: #0b1430; aspect-ratio: 16 / 9; }
+  .quadro img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  footer { text-align: center; color: var(--suave); font-size: .85rem; opacity: .85; }
+  @media (prefers-reduced-motion: reduce) { .cristal, .ceu i { animation: none; } }
+</style>
+</head>
+<body>
+<div class="capa" aria-hidden="true"></div>
+<div class="ceu" id="ceu" aria-hidden="true"></div>
+<main>
+  <header>
+    <svg class="cristal" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8fbff"/><stop offset=".5" stop-color="#6cc4ff"/><stop offset="1" stop-color="#2b5fd1"/></linearGradient></defs>
+      <path d="M32 3 50 24 32 61 14 24Z" fill="url(#g)" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M14 24h36M32 3 25 24l7 37 7-37Z" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
+    </svg>
+    <h1>Cristais de Lumen</h1>
+    <p class="lema">Acenda os cristais e traga a luz de volta ao reino.</p>
+    <a class="jogar" href="jogo/" id="jogar">▶ Jogar agora</a>
+    <p class="dica" id="dica">Funciona no computador e no tablet. A primeira abertura demora um pouco: o jogo é grande.</p>
+  </header>
 
-    <!-- Custom PreHead code is injected here -->
-    
+  <figure class="quadro"><img src="capa.jpg" width="1280" height="720" alt="Kael, Lina e Nara olham o vale e o castelo ao longe, à noite"></figure>
 
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name ="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta charset="utf-8"/>
+  <section class="cartao" aria-labelledby="t-saves">
+    <h2 id="t-saves">Seus jogos salvos</h2>
+    <p class="sub">Ficam guardados neste aparelho e neste navegador. Baixe uma cópia para não perder nada.</p>
+    <div class="espacos" id="espacos"></div>
+    <div class="acoes">
+      <button type="button" id="baixar">⬇ Baixar cópia dos meus jogos</button>
+      <label class="botao">⬆ Carregar cópia de um arquivo<input type="file" id="arquivo" accept=".json,application/json"></label>
+    </div>
+    <div class="estado" id="estado" role="status" aria-live="polite"></div>
+  </section>
 
-        <!-- Builtin injector for disabling cache -->
-        <meta http-equiv="pragma" content="no-cache"/>
+  <section class="cartao" aria-labelledby="t-como">
+    <h2 id="t-como">Como jogar</h2>
+    <div class="grade2">
+      <div>
+        <p><strong>No computador:</strong> setas e Enter, ou o mouse.</p>
+        <p><strong>No tablet ou celular:</strong> toque na tela. Deite o aparelho para jogar.</p>
+      </div>
+      <div>
+        <p><strong>Trocar de aparelho:</strong> baixe a cópia aqui, mande o arquivo para o outro aparelho e use “Carregar cópia”.</p>
+        <p><strong>Modo anônimo</strong> não guarda o jogo: use o navegador normal.</p>
+      </div>
+    </div>
+  </section>
 
-        <!-- Set the title bar of the page -->
-        <title>Cristais de Lumen</title>
+  <footer>Desenvolvido por Matheus Marques</footer>
+</main>
+<script>
+(function () {
+  "use strict";
+  var PREFIXO = "CristaisdeLumen.0.CristaisdeLumen.0.";
+  var ESPACOS = 3;
+  var TOTAL_CRISTAIS = 8;
+  var NOMES = { kael: "Kael", lina: "Lina", nara: "Nara", auriel: "Auriel", irvyng: "Irvyng",
+                tayia: "Tayia", josaph: "Josaph", algaz: "Algaz" };
+  var LUGARES = [["floresta", "Floresta Verdejante"], ["caverna", "Caverna de Cristal"], ["castelo", "Castelo Sombrio"],
+                 ["catedral", "Catedral de Aurora"], ["templo_estelar", "Ruínas do Templo Estelar"],
+                 ["mercanteaus", "Mercanteaus"], ["faialis", "Ilha Faialis"], ["chiaroscuro", "Chiaroscuro Lumina"]];
 
-        <!-- Custom PreStyle code is injected here -->
-        
+  function chave(n) { return PREFIXO + (n === 1 ? "lumen_remake_save.json" : "lumen_remake_save_" + n + ".json"); }
+  function ler(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function gravar(k, v) { try { window.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
 
-        <!-- Set the background colour of the document -->
-        <style>
-            body {
-                background: #0;
-                color: #cccccc;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
+  // O GameMaker grava base64 dos bytes (JSON + "\0"): decodifica em UTF-8.
+  function decodificar(b64) {
+    try {
+      var bin = atob(b64), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      var txt = new TextDecoder("utf-8").decode(bytes).replace(/\u0000+$/, "");
+      return JSON.parse(txt);
+    } catch (e) { return null; }
+  }
+  function tempo(seg) {
+    seg = Math.max(0, Math.floor(seg || 0));
+    var h = Math.floor(seg / 3600), m = Math.floor((seg % 3600) / 60);
+    return h ? h + "h " + (m < 10 ? "0" : "") + m + "min" : m + "min";
+  }
+  function resumo(s) {
+    var cristais = 0, lugar = "";
+    LUGARES.forEach(function (L) {
+      if (s.vencidas && s.vencidas[L[0]] === true) cristais++;
+      else if (s.regioes && s.regioes[L[0]] === true) lugar = L[1];
+    });
+    var nivel = 1;
+    (s.equipe || []).forEach(function (h) { if (h && h.nivel > nivel) nivel = h.nivel; });
+    var time = (s.time || []).map(function (id) { return NOMES[id] || id; }).join(", ");
+    return { cristais: cristais, nivel: nivel, tempo: tempo(s.tempo_jogo), time: time, lugar: lugar };
+  }
 
-            canvas {
-                image-rendering: optimizeSpeed;
-                -webkit-interpolation-mode: nearest-neighbor;
-                -ms-touch-action: none;
-                touch-action: none;
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            :-webkit-full-screen #canvas {
-                width: 100%;
-                height: 100%;
-            }
-            :-webkit-full-screen {
-                width: 100%;
-                height: 100%;
-            }
-            
-            /* Custom Runner Styles */
-            div.gm4html5_div_class {
-                margin: 0px;
-                padding: 0px;
-                border: 0px;
-            }
-            div.gm4html5_login {
-                padding: 20px;
-                position: absolute;
-                border: solid 2px #000000;
-                background-color: #404040;
-                color:#00ff00;
-                border-radius: 15px;
-                box-shadow: #101010 20px 20px 40px;
-            }
-            div.gm4html5_cancel_button {
-                float: right;
-            }
-            div.gm4html5_login_button {
-                float: left;
-            }
-            div.gm4html5_login_header {
-                text-align: center;
-            }
-            /* END - Custom Runner Styles */
-            
-        </style>
-
-        <!-- Custom PostStyle code is injected here -->
-        
-
-        <!-- Builtin injector for injecting flurry analytics code -->
-        
-    
-    <!-- ajuste de publicacao: o canvas cabe na janela sem cortar -->
-    <style>
-        html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
-        #canvas {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: min(100vw, calc(100vh * 16 / 9));
-            height: min(100vh, calc(100vw * 9 / 16));
-            max-width: 100vw; max-height: 100vh;
-            touch-action: none;
+  function desenhar() {
+    var box = document.getElementById("espacos");
+    box.textContent = "";
+    var algum = false;
+    for (var n = 1; n <= ESPACOS; n++) {
+      var bruto = ler(chave(n));
+      var card = el("div", "espaco");
+      card.appendChild(el("div", "nome", "Espaço " + n));
+      if (!bruto) {
+        card.classList.add("vazio");
+        card.appendChild(el("div", "fraco", "Vazio. Um jogo novo pode começar aqui."));
+      } else {
+        algum = true;
+        var s = decodificar(bruto);
+        if (!s) {
+          card.appendChild(el("div", "fraco", "Este jogo salvo não abriu aqui (o jogo tenta de novo ao abrir)."));
+        } else {
+          var r = resumo(s);
+          card.appendChild(el("div", "linha", "Nível " + r.nivel + " · " + r.tempo + " de jogo"));
+          card.appendChild(el("div", "fraco", r.time ? "Time: " + r.time : ""));
+          card.appendChild(el("div", "fraco", r.lugar ? "Próxima parada: " + r.lugar : (r.cristais >= TOTAL_CRISTAIS ? "Todos os cristais acesos!" : "")));
+          var gemas = el("div", "gemas");
+          gemas.setAttribute("aria-label", r.cristais + " de " + TOTAL_CRISTAIS + " cristais acesos");
+          for (var g = 0; g < TOTAL_CRISTAIS; g++) gemas.appendChild(el("b", g < r.cristais ? "acesa" : ""));
+          card.appendChild(gemas);
         }
-    </style>
-    </head>
+      }
+      box.appendChild(card);
+    }
+    document.getElementById("baixar").disabled = !algum;
+    document.getElementById("jogar").textContent = algum ? "▶ Continuar jogando" : "▶ Jogar agora";
+  }
 
-    <!-- Custom PostHead code is injected here -->
-    
+  function avisar(txt, tipo) {
+    var e = document.getElementById("estado");
+    e.textContent = txt;
+    e.className = "estado" + (tipo ? " " + tipo : "");
+  }
 
-    <!-- Custom PreBody code is injected here -->
-    
+  document.getElementById("baixar").addEventListener("click", function () {
+    var copia = { jogo: "Cristais de Lumen", formato: 1, data: new Date().toISOString(), espacos: {} };
+    for (var n = 1; n <= ESPACOS; n++) { var v = ler(chave(n)); if (v) copia.espacos[n] = v; }
+    var blob = new Blob([JSON.stringify(copia, null, 1)], { type: "application/json" });
+    var a = document.createElement("a");
+    var d = new Date();
+    a.href = URL.createObjectURL(blob);
+    a.download = "cristais-de-lumen-jogos-" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    avisar("Cópia baixada. Guarde o arquivo: com ele você recupera seus jogos em qualquer aparelho.", "ok");
+  });
 
-    <body>
-        <!-- Custom BodyStart code is injected here -->
-        
+  document.getElementById("arquivo").addEventListener("change", function (ev) {
+    var f = ev.target.files && ev.target.files[0];
+    ev.target.value = "";
+    if (!f) return;
+    if (f.size > 2 * 1024 * 1024) { avisar("Esse arquivo é grande demais para ser uma cópia dos jogos.", "erro"); return; }
+    var leitor = new FileReader();
+    leitor.onload = function () {
+      var c;
+      try { c = JSON.parse(leitor.result); } catch (e) { c = null; }
+      if (!c || c.jogo !== "Cristais de Lumen" || typeof c.espacos !== "object" || !c.espacos) {
+        avisar("Esse arquivo não é uma cópia de jogos do Cristais de Lumen.", "erro"); return;
+      }
+      var validos = [];
+      for (var n = 1; n <= ESPACOS; n++) {
+        var v = c.espacos[n];
+        if (typeof v === "string" && /^[A-Za-z0-9+/=]+$/.test(v) && decodificar(v)) validos.push([n, v]);
+      }
+      if (!validos.length) { avisar("A cópia não tem nenhum jogo que abra.", "erro"); return; }
+      var ocupados = validos.filter(function (p) { var a = ler(chave(p[0])); return a && a !== p[1]; }).map(function (p) { return p[0]; });
+      if (ocupados.length && !window.confirm("Os espaços " + ocupados.join(", ") + " deste aparelho já têm jogos. Trocar pelos da cópia?")) {
+        avisar("Nada foi mudado.", ""); return;
+      }
+      var ok = validos.every(function (p) { return gravar(chave(p[0]), p[1]); });
+      desenhar();
+      avisar(ok ? "Pronto! Seus jogos foram carregados neste aparelho." : "O navegador não deixou gravar (modo anônimo?).", ok ? "ok" : "erro");
+    };
+    leitor.onerror = function () { avisar("Não consegui ler o arquivo.", "erro"); };
+    leitor.readAsText(f);
+  });
 
-        <div class="gm4html5_div_class" id="gm4html5_div_id">
-            
-            <!-- Builtin injector for splash screen -->
-            
+  // estrelinhas do fundo (so enfeite; some com "reduzir movimento")
+  var ceu = document.getElementById("ceu");
+  for (var i = 0; i < 46; i++) {
+    var s = document.createElement("i");
+    s.style.left = (Math.random() * 100) + "%";
+    s.style.top = (Math.random() * 65) + "%";
+    s.style.animationDelay = (Math.random() * 5) + "s";
+    ceu.appendChild(s);
+  }
 
-            <!-- Custom PreCanvas code is injected here -->
-            
+  try {
+    var ua = navigator.userAgent || "";
+    var toque = /iPad|iPhone|Android|Mobile|Tablet/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
+    if (toque) document.getElementById("dica").textContent =
+      "No tablet ou celular: deite o aparelho e toque na tela. A primeira abertura demora um pouco.";
+  } catch (e) { /* so a dica */ }
 
-            <!-- Create the canvas element the game draws to -->
-            <canvas id="canvas" width="1280" height="720" style="position: absolute; top: 50%; left: 50%; bottom: -50%; right: -50%; transform: translate(-50%, -50%);">
-                
-                <p>Your browser doesn't support HTML5 canvas.</p>
-            </canvas>
-            
-            <!-- Custom PostCanvas code is injected here -->
-            
-        </div>
-
-        <!-- Run the game code -->
-        <script type="text/javascript" src="html5game/CristaisDeLumenRemake.js?cachebust=1287962384"></script>
-
-        <!-- Builtin injector for injecting runner path -->
-        
-
-        <script>window.onload = GameMaker_Init;</script>
-
-        <!-- Builtin injector for injecting google analytics code -->
-        
-
-        <!-- Custom BodyEnd code is injected here -->
-        
-    </body>
-
-    <!-- Custom PostBody code is injected here -->
-    
+  window.addEventListener("storage", desenhar);
+  desenhar();
+})();
+</script>
+</body>
 </html>

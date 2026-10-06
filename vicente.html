@@ -63,7 +63,7 @@
   <div class="botoes">
     <button class="principal" id="carregar" type="button">Colocar o jogo do Vicente e jogar</button>
     <button class="secundario" id="desfazer" type="button">Desfazer (voltar o que estava neste espaço)</button>
-    <a class="botao secundario" href="./">Abrir o jogo sem mudar nada</a>
+    <a class="botao secundario" href="./jogo/">Abrir o jogo sem mudar nada</a>
   </div>
   <p class="aviso">Vale só para este aparelho e este navegador. Abra este link uma vez em cada aparelho em que o Vicente for jogar. Nenhum jogo salvo de outra pessoa é apagado.</p>
 </main>
@@ -121,7 +121,7 @@
       }
     }
     mostrar("Pronto! Abrindo o jogo… escolha <strong>Continuar</strong> e o <strong>Espaço " + n + "</strong>.");
-    window.setTimeout(function () { window.location.href = "./"; }, 1800);
+    window.setTimeout(function () { window.location.href = "./jogo/"; }, 1800);
   });
 
   document.getElementById("desfazer").addEventListener("click", function () {
