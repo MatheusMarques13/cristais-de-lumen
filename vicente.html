@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cristais de Lumen · Vicente</title>
 <!--
-  Save do Vicente (pedido do professor, 06/10/2026): Floresta, Caverna,
-  Castelo e Catedral vencidas, as Ruinas do Templo Estelar abertas com o
-  Leviata esperando no fim, o Irvyng no time e SEM o Anel (ele vence o Leviata,
-  ganha o Anel e abre Mercanteaus).
+  Save do Vicente, 2a parte (pedido do professor, 08/10/2026): ele acabou de
+  vencer o Marceas Tita no topo da Mercanteaus e de liberar a Ilha Faialis.
+  (A 1a parte, de 06/10, era a das Ruinas com o Leviata esperando; o save dela
+  continua em saves_teste/save_vicente.json e e a base desta.)
 
-  O SAVE_B64 NAO se edita a mao: sai de `python3 ferramentas/montar_save_vicente.py`
-  (valida no _save_validar de verdade). Fonte legivel: saves_teste/save_vicente.json.
+  O SAVE_B64 NAO se edita a mao: sai de `python3 ferramentas/montar_save_vicente_faialis.py`
+  (repete o caminho com as funcoes do jogo e valida no _save_validar de verdade).
+  Fonte legivel: saves_teste/save_vicente_faialis.json.
 
   Onde o GameMaker HTML5 guarda arquivo: localStorage[prefixo + nome], prefixo
   medido no jogo publicado: "CristaisdeLumen.0.CristaisdeLumen.0.". O Espaco 1 e
@@ -53,11 +54,12 @@
 <body>
 <main>
   <h1>Jogo do Vicente</h1>
-  <p class="sub">Cristais de Lumen: a aventura continua nas Ruínas do Templo Estelar.</p>
+  <p class="sub">Cristais de Lumen: o Titã Marceas caiu, e a Ilha Faialis está aberta.</p>
   <ul>
-    <li>Floresta, Caverna, Castelo e Catedral vencidas, com os cristais acesos</li>
-    <li><strong>Irvyng</strong> já está no time, junto com Lina e Kael, todos no nível 15</li>
-    <li>O <strong>Leviatã</strong> espera no fim das Ruínas: vença ele para ganhar o <strong>Anel do Rei Abissal</strong> e abrir o caminho para Mercanteaus</li>
+    <li><strong>Marceas, o Titã do Abismo</strong>, foi vencido: o Cristal das Marés de Mercanteaus está aceso</li>
+    <li><strong>Algaz</strong> entrou no time com Irvyng e Lina (Kael, Nara e Auriel na reserva)</li>
+    <li>Nova ilha liberada no mapa: <strong>Ilha Faialis</strong></li>
+    <li>Lúmens guardados para ensinar as habilidades do Algaz na Árvore</li>
   </ul>
   <div class="estado" id="estado" role="status"></div>
   <div class="botoes">
@@ -72,8 +74,8 @@
   "use strict";
   var PREFIXO = "CristaisdeLumen.0.CristaisdeLumen.0.";
   var ESPACOS = 3;
-  var GUARDADO = PREFIXO + "vicente.espaco";          // em qual espaco a pagina pos o save
-  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE1LCJ4cCI6MCwiaHAiOjIwMiwibXAiOjI0fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxNSwieHAiOjAsImhwIjoxMDgsIm1wIjo5Mn0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTM3LCJtcCI6Njh9LHsiaWQiOiJhdXJpZWwiLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTQwLCJtcCI6NjZ9LHsiaWQiOiJpcnZ5bmciLCJuaXZlbCI6MTUsInhwIjowLCJocCI6MTM2LCJtcCI6NzB9XSwidGltZSI6WyJpcnZ5bmciLCJsaW5hIiwia2FlbCJdLCJvdXJvIjo2MDAsImx1bWVucyI6NDAsImFydm9yZSI6eyJrYWVsIjpbImdvbHBlX2ZvcnRlIiwiZ3JpdG9fY29yYWdlbSIsIm11cmFsaGEiLCJrYWVsX2hwXzEiLCJjb3J0ZV9naXJhdG9yaW8iLCJrYWVsX2F0cV8xIiwia2FlbF9hdHFfMiIsImxhbWluYV9hdXJvcmEiLCJrYWVsX2hwXzIiXSwibGluYSI6WyJjaGFtYSIsImphdG9fYWd1YSIsInJhaW9fY3Jpc3RhbCIsImJhcnJlaXJhX2RvdXJhZGEiLCJ2aW5oYXNfZXNwaW5ob3NhcyIsImxpbmFfbWFnXzEiLCJtZXRlb3JvIiwibGluYV9tcF8xIiwib3JiZV9zb21icmlvIiwic3VwZXJub3ZhX2NyaXN0YWwiXSwibmFyYSI6WyJjdXJhciIsImJyaXNhX2N1cmF0aXZhIiwiaW52b2Nhcl91cnNvIiwib3J2YWxobyIsInJldml2ZXIiLCJuYXJhX21hZ18xIiwicmV2b2FkYSIsIm5hcmFfaHBfMSIsImVzcGlyaXRvX2NlcnZvIiwiZmxvcmVzY2VyIl0sImF1cmllbCI6WyJmbGVjaGFfZG91cmFkYSIsImJlbmNhbyIsImJhcnJlaXJhX2F1cmllbCIsImF1cmllbF9tYWdfMSIsImp1bGdhbWVudG9fc3VwZXJpb3IiLCJsYW5jYV9zYWdyYWRhIiwiYXVyaWVsX2hwXzEiLCJqdWl6b19hcmNhbmpvcyJdLCJpcnZ5bmciOlsiZXNmZXJhX2VzdGVsYXIiLCJwdW5ob19lc3RlbGFyIiwiZWdpZGVfY2VsZXN0ZSIsInJhaW9fb3JiZSIsImlydnluZ19tYWdfMSIsInF1ZWRhX2NvbWV0YSIsImNpcmN1bG9fYXN0cmFsIiwiaXJ2eW5nX2hwXzEiLCJjaHV2YV9jb25zdGVsYWNhbyJdfSwiYmF1cyI6eyJmbG9yZXN0YSI6W3RydWUsdHJ1ZV0sImNhdmVybmEiOlt0cnVlLHRydWVdLCJjYXN0ZWxvIjpbdHJ1ZSx0cnVlXSwiY2F0ZWRyYWwiOlt0cnVlLHRydWVdfSwicmVjcnV0YWRvcyI6eyJhdXJpZWwiOnRydWUsImlydnluZyI6dHJ1ZSwidGF5aWEiOmZhbHNlLCJqb3NhcGgiOmZhbHNlLCJhbGdheiI6ZmFsc2V9LCJpdGVucyI6eyJwb2NhbyI6NSwiZXRlciI6MywicGVuYSI6MiwiZXNiZXJ1cyI6Mn0sInJlZ2lvZXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6dHJ1ZSwibWVyY2FudGVhdXMiOmZhbHNlLCJmYWlhbGlzIjpmYWxzZSwiY2hpYXJvc2N1cm8iOmZhbHNlfSwidmVuY2lkYXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6ZmFsc2UsIm1lcmNhbnRlYXVzIjpmYWxzZSwiZmFpYWxpcyI6ZmFsc2UsImNoaWFyb3NjdXJvIjpmYWxzZX0sIm1hcmNvcyI6e30sInRlbXBvX2pvZ28iOjU0MDAuMCwiZXNwZWNpYWwiOlsxMDAsMTAwLDEwMCwxMDAsMTAwXX0A";
+  var GUARDADO = PREFIXO + "vicente.faialis.espaco";  // em qual espaco a pagina pos o save (2a parte; a 1a usava "vicente.espaco")
+  var SAVE_B64 = "eyJ2ZXJzYW8iOjEsImVxdWlwZSI6W3siaWQiOiJrYWVsIiwibml2ZWwiOjE4LCJ4cCI6MTE3MywiaHAiOjIyOSwibXAiOjI3fSx7ImlkIjoibGluYSIsIm5pdmVsIjoxOSwieHAiOjEyNiwiaHAiOjEyOCwibXAiOjEwOH0seyJpZCI6Im5hcmEiLCJuaXZlbCI6MTcsInhwIjozMDYsImhwIjoxNDksIm1wIjo3NH0seyJpZCI6ImF1cmllbCIsIm5pdmVsIjoxNywieHAiOjMwNiwiaHAiOjE1MiwibXAiOjcyfSx7ImlkIjoiaXJ2eW5nIiwibml2ZWwiOjE5LCJ4cCI6MTI2LCJocCI6MTYwLCJtcCI6ODJ9LHsiaWQiOiJhbGdheiIsIm5pdmVsIjoxOCwieHAiOjk2MCwiaHAiOjE0OCwibXAiOjc3fV0sInRpbWUiOlsiaXJ2eW5nIiwibGluYSIsImFsZ2F6Il0sIm91cm8iOjQ3MzEsImx1bWVucyI6OTMsImFydm9yZSI6eyJrYWVsIjpbImdvbHBlX2ZvcnRlIiwiZ3JpdG9fY29yYWdlbSIsIm11cmFsaGEiLCJrYWVsX2hwXzEiLCJjb3J0ZV9naXJhdG9yaW8iLCJrYWVsX2F0cV8xIiwia2FlbF9hdHFfMiIsImxhbWluYV9hdXJvcmEiLCJrYWVsX2hwXzIiXSwibGluYSI6WyJjaGFtYSIsImphdG9fYWd1YSIsInJhaW9fY3Jpc3RhbCIsImJhcnJlaXJhX2RvdXJhZGEiLCJ2aW5oYXNfZXNwaW5ob3NhcyIsImxpbmFfbWFnXzEiLCJtZXRlb3JvIiwibGluYV9tcF8xIiwib3JiZV9zb21icmlvIiwic3VwZXJub3ZhX2NyaXN0YWwiXSwibmFyYSI6WyJjdXJhciIsImJyaXNhX2N1cmF0aXZhIiwiaW52b2Nhcl91cnNvIiwib3J2YWxobyIsInJldml2ZXIiLCJuYXJhX21hZ18xIiwicmV2b2FkYSIsIm5hcmFfaHBfMSIsImVzcGlyaXRvX2NlcnZvIiwiZmxvcmVzY2VyIl0sImF1cmllbCI6WyJmbGVjaGFfZG91cmFkYSIsImJlbmNhbyIsImJhcnJlaXJhX2F1cmllbCIsImF1cmllbF9tYWdfMSIsImp1bGdhbWVudG9fc3VwZXJpb3IiLCJsYW5jYV9zYWdyYWRhIiwiYXVyaWVsX2hwXzEiLCJqdWl6b19hcmNhbmpvcyJdLCJpcnZ5bmciOlsiZXNmZXJhX2VzdGVsYXIiLCJwdW5ob19lc3RlbGFyIiwiZWdpZGVfY2VsZXN0ZSIsInJhaW9fb3JiZSIsImlydnluZ19tYWdfMSIsInF1ZWRhX2NvbWV0YSIsImNpcmN1bG9fYXN0cmFsIiwiaXJ2eW5nX2hwXzEiLCJjaHV2YV9jb25zdGVsYWNhbyJdLCJhbGdheiI6WyJ0ZXJyZW1vdG9fYWJpc3NhbCJdfSwiYmF1cyI6eyJmbG9yZXN0YSI6W3RydWUsdHJ1ZV0sImNhdmVybmEiOlt0cnVlLHRydWVdLCJjYXN0ZWxvIjpbdHJ1ZSx0cnVlXSwiY2F0ZWRyYWwiOlt0cnVlLHRydWVdLCJ0ZW1wbG9fZXN0ZWxhciI6W3RydWVdLCJtZXJjYW50ZWF1cyI6W3RydWUsdHJ1ZSx0cnVlLHRydWVdfSwicmVjcnV0YWRvcyI6eyJhdXJpZWwiOnRydWUsImlydnluZyI6dHJ1ZSwidGF5aWEiOmZhbHNlLCJqb3NhcGgiOmZhbHNlLCJhbGdheiI6dHJ1ZX0sIml0ZW5zIjp7InBvY2FvIjo1LCJldGVyIjo2LCJwZW5hIjo0LCJlc2JlcnVzIjozfSwicmVnaW9lcyI6eyJmbG9yZXN0YSI6dHJ1ZSwiY2F2ZXJuYSI6dHJ1ZSwiY2FzdGVsbyI6dHJ1ZSwiY2F0ZWRyYWwiOnRydWUsInRlbXBsb19lc3RlbGFyIjp0cnVlLCJtZXJjYW50ZWF1cyI6dHJ1ZSwiZmFpYWxpcyI6dHJ1ZSwiY2hpYXJvc2N1cm8iOmZhbHNlfSwidmVuY2lkYXMiOnsiZmxvcmVzdGEiOnRydWUsImNhdmVybmEiOnRydWUsImNhc3RlbG8iOnRydWUsImNhdGVkcmFsIjp0cnVlLCJ0ZW1wbG9fZXN0ZWxhciI6ZmFsc2UsIm1lcmNhbnRlYXVzIjp0cnVlLCJmYWlhbGlzIjpmYWxzZSwiY2hpYXJvc2N1cm8iOmZhbHNlfSwibWFyY29zIjp7InRlbXBsb19lc3RlbGFyIjpbImxldmlhdGEiXSwibWVyY2FudGVhdXMiOlsibWFyY2VhcyIsImxldmlhdGFfbWFpb3IiLCJtYXJtZWxsaWEiLCJhbGdheiIsIm1hcmNlYXNfdGl0YV9jaGVnb3UiLCJtYXJjZWFzX3RpdGEiXX0sInRlbXBvX2pvZ28iOjEyNjAwLjAsImVzcGVjaWFsIjpbMTAwLDEwMCwxMDAsMTAwLDEwMCwwXX0A";
 
   var estado = document.getElementById("estado");
 
