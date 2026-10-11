@@ -82,6 +82,17 @@
         <!-- Builtin injector for injecting flurry analytics code -->
         
     
+    <!-- aparelho de toque: o titulo comeca com a dica de toque no iPad -->
+    <script>
+    (function () {
+        var k = "CristaisdeLumen.0.CristaisdeLumen.0.lumen_aparelho.json";
+        try {
+            var toque = !!(window.matchMedia && matchMedia("(hover: none) and (pointer: coarse)").matches);
+            localStorage.setItem(k, btoa('{"toque":' + (toque ? "true" : "false") + '}\u0000'));
+        } catch (e) { /* sem localStorage: o titulo comeca pelo teclado e troca no 1o toque */ }
+    })();
+    </script>
+    
     <!-- ajuste de publicacao: o canvas cabe na janela sem cortar -->
     <style>
         html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
@@ -125,7 +136,7 @@
         </div>
 
         <!-- Run the game code -->
-        <script type="text/javascript" src="html5game/CristaisDeLumenRemake.js?cachebust=888214721"></script>
+        <script type="text/javascript" src="html5game/CristaisDeLumenRemake.js?cachebust=563144063"></script>
 
         <!-- Builtin injector for injecting runner path -->
         

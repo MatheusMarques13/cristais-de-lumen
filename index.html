@@ -4,129 +4,422 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cristais de Lumen</title>
-<meta name="description" content="Cristais de Lumen: um RPG de aventura feito à mão. Jogue no navegador, no computador ou no tablet.">
+<meta name="description" content="Cristais de Lumen, um jogo de Matheus Marques. RPG de turnos para jogar no navegador do computador ou do tablet.">
 <meta property="og:title" content="Cristais de Lumen">
-<meta property="og:description" content="Acenda os cristais e traga a luz de volta ao reino. Jogue no navegador.">
-<meta property="og:image" content="https://matheusmarques13.github.io/cristais-de-lumen/capa.jpg">
-<meta name="theme-color" content="#0e1a33">
+<meta property="og:description" content="Cristais de Lumen, um jogo de Matheus Marques. RPG de turnos para jogar no navegador do computador ou do tablet.">
+<meta property="og:image" content="https://matheusmarques13.github.io/cristais-de-lumen/launcher/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#397DAD">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="jogo/favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="launcher/fontes/almendra.woff2" as="font" type="font/woff2" crossorigin>
 <!--
-  Launcher do Cristais de Lumen (06/10/2026). Mora na raiz do site; o jogo
-  (build HTML5 do GameMaker) mora em ./jogo/. Os jogos salvos ficam no
-  localStorage DESTE site (mesma origem do jogo), um por aparelho/navegador:
-  CristaisdeLumen.0.CristaisdeLumen.0.lumen_remake_save[_N].json, valor =
-  base64 do JSON + "\0" (medido no jogo publicado). Daqui o jogador ve os 3
-  espacos, baixa uma copia dos jogos para o aparelho e carrega de volta.
-  Fonte: ferramentas/web/launcher.html (o publicar_web.py copia como index.html).
+  Launcher do Cristais de Lumen (09/10/2026, RESPIRO_LAUNCHER_MENU.md §A).
+  "A pagina e o mapa do jogo, e rolar e mergulhar": o topo tem o mar dos dois
+  mapas, e o fundo desce ate o abismo de Mercanteaus. Toda imagem e arte do jogo,
+  recortada pelo ferramentas/web/montar_launcher.py (que tambem escreve o bloco
+  ARTE la embaixo). Nada e desenhado por codigo: o CSS so posiciona, escurece,
+  soma luz (mix-blend-mode: screen) e anima transform/opacity.
+  O jogo mora em ./jogo/. Os jogos salvos ficam no localStorage DESTE site:
+  CristaisdeLumen.0.CristaisdeLumen.0.lumen_remake_save[_N].json, valor = base64
+  do JSON + "\0". Tudo que vem do save entra por textContent (nunca como HTML cru).
+  O montar_site.sh copia este arquivo como index.html e a pasta launcher/ inteira.
 -->
 <style>
+  @font-face { font-family: "Almendra"; font-weight: 700; font-display: swap;
+    src: url("launcher/fontes/almendra.woff2") format("woff2"); }
+  @font-face { font-family: "Andika"; font-weight: 700; font-display: swap;
+    src: url("launcher/fontes/andika.woff2") format("woff2"); }
+
+  /* Cada cor saiu de uma arte do jogo (RESPIRO §A.2.2). */
   :root {
-    --noite: #0b1430; --noite2: #13224a; --cartao: rgba(20, 34, 72, .82); --borda: #b98b47;
-    --ouro: #f2c14e; --ouro2: #ffe7a3; --texto: #f6efdc; --suave: #b9c3dd; --azul: #6cc4ff; --erro: #ff9b8a;
-    --raio: 16px;
+    --mar: #397DAD; --mar-borda: #296D81; --abismo: #0C2454; --fundo: #070D1C; --tinta: #0E0F14;
+    --espuma: #EEF4F8; --espuma-2: #B7CCDA; --agua: #3FE0D8; --sol: #F5A12C; --brasa: #DB5C0B;
+    --carta: #3CB4FC; --raio: #6872B8; --ouro: #E4CC54; --folha: #6C835B;
+    --painel: rgba(7, 13, 28, .72); --painel-borda: rgba(183, 204, 218, .25); --erro: #FF9B8A; --ok: #9FE8C9;
+    --f-titulo: "Almendra", Georgia, "Times New Roman", serif;
+    --f-texto: "Andika", "Trebuchet MS", system-ui, sans-serif;
+    --t-titulo: clamp(3.4rem, 2rem + 6vw, 7.5rem);
+    --t-secao: clamp(2rem, 1.4rem + 2vw, 3rem);
+    --gutter: clamp(16px, 4vw, 48px);
+    --max: 1360px;
+    --ritmo-abertura: clamp(4rem, 3rem + 5vw, 9rem);
+    --rapido: 220ms; --saida: cubic-bezier(.16, 1, .3, 1);
+    /* contorno de nanquim igual ao ui_texto_contorno do jogo (nao e brilho) */
+    --contorno-3: 3px 0 0 var(--tinta), -3px 0 0 var(--tinta), 0 3px 0 var(--tinta), 0 -3px 0 var(--tinta),
+      2px 2px 0 var(--tinta), -2px 2px 0 var(--tinta), 2px -2px 0 var(--tinta), -2px -2px 0 var(--tinta);
+    --contorno-2: 2px 0 0 var(--tinta), -2px 0 0 var(--tinta), 0 2px 0 var(--tinta), 0 -2px 0 var(--tinta),
+      1px 1px 0 var(--tinta), -1px 1px 0 var(--tinta), 1px -1px 0 var(--tinta), -1px -1px 0 var(--tinta);
+    --contorno-1: 1px 0 0 var(--tinta), -1px 0 0 var(--tinta), 0 1px 0 var(--tinta), 0 -1px 0 var(--tinta),
+      0 2px 6px rgba(14, 15, 20, .55);
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
-  html, body { margin: 0; min-height: 100%; background: var(--noite); color: var(--texto); }
-  body { font-family: "Nunito", "Trebuchet MS", system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;
-    background:
-      radial-gradient(ellipse 80% 55% at 50% -5%, rgba(108,196,255,.28), transparent 70%),
-      radial-gradient(ellipse 60% 40% at 85% 110%, rgba(242,193,78,.18), transparent 70%),
-      linear-gradient(180deg, var(--noite2), var(--noite) 70%); }
-  .ceu { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-  .ceu i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #fff; opacity: .0;
-    animation: brilho 5s ease-in-out infinite; }
-  @keyframes brilho { 0%, 100% { opacity: 0 } 50% { opacity: .9 } }
-  .capa { position: fixed; inset: 0; background: url("capa.jpg") center 30% / cover no-repeat; opacity: .22;
-    mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.6) 55%, transparent 100%);
-    -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0,0,0,.6) 55%, transparent 100%); }
-  main { position: relative; max-width: 980px; margin: 0 auto; padding: clamp(28px, 6vh, 64px) 18px 48px;
-    display: grid; gap: 26px; }
-  header { text-align: center; }
-  .cristal { width: 64px; height: 64px; margin: 0 auto 6px; filter: drop-shadow(0 0 18px rgba(108,196,255,.75));
-    animation: flutua 4s ease-in-out infinite; }
-  @keyframes flutua { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
-  h1 { font-family: "Cinzel Decorative", Georgia, serif; font-size: clamp(2.3rem, 7vw, 4.6rem); margin: 0;
-    line-height: 1.05; color: var(--ouro2); letter-spacing: .5px;
-    text-shadow: 0 2px 0 #7a5420, 0 6px 22px rgba(242,193,78,.45); }
-  .lema { margin: 10px 0 0; color: var(--suave); font-size: clamp(1rem, 2.4vw, 1.2rem); }
-  .jogar { display: inline-flex; align-items: center; gap: 12px; margin-top: 24px; padding: 18px 46px;
-    font: 800 1.35rem "Nunito", sans-serif; color: #2a1a03; text-decoration: none; cursor: pointer;
-    background: linear-gradient(180deg, var(--ouro2), var(--ouro) 55%, #d99a2b); border: 3px solid #fff2c9;
-    border-radius: 999px; box-shadow: 0 8px 0 #8a5d1c, 0 14px 34px rgba(242,193,78,.4);
-    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease; }
-  .jogar:hover { filter: brightness(1.06); transform: translateY(-2px); }
-  .jogar:active { transform: translateY(5px); box-shadow: 0 3px 0 #8a5d1c, 0 8px 18px rgba(242,193,78,.35); }
-  .jogar:focus-visible, button:focus-visible, label.botao:focus-within { outline: 3px solid var(--azul); outline-offset: 3px; }
-  .dica { margin: 14px 0 0; color: var(--suave); font-size: .92rem; }
-  section.cartao { background: var(--cartao); border: 2px solid var(--borda); border-radius: var(--raio);
-    padding: 22px clamp(16px, 3vw, 28px); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 10px 0 rgba(5,10,25,.55), 0 20px 50px rgba(0,0,0,.35); }
-  h2 { margin: 0 0 4px; font-family: "Cinzel Decorative", Georgia, serif; font-size: 1.35rem; color: var(--ouro); }
-  .sub { margin: 0 0 18px; color: var(--suave); font-size: .95rem; }
-  .espacos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
-  .espaco { border-radius: 12px; padding: 16px; background: rgba(8,14,34,.55); border: 1.5px solid rgba(185,139,71,.55);
-    display: grid; gap: 6px; min-height: 132px; }
-  .espaco.vazio { border-style: dashed; opacity: .78; }
-  .espaco .nome { font-weight: 800; color: var(--ouro2); font-size: 1.05rem; }
-  .espaco .linha { color: var(--texto); font-size: .95rem; }
-  .espaco .fraco { color: var(--suave); font-size: .88rem; }
-  .gemas { display: flex; gap: 4px; margin-top: 4px; }
-  .gemas b { width: 13px; height: 13px; transform: rotate(45deg); border-radius: 2px; background: rgba(185,195,221,.22); }
-  .gemas b.acesa { background: linear-gradient(135deg, #bff0ff, var(--azul)); box-shadow: 0 0 8px rgba(108,196,255,.9); }
-  .acoes { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  button, label.botao { font: 700 1rem "Nunito", sans-serif; padding: 11px 18px; border-radius: 10px; cursor: pointer;
-    color: var(--texto); background: rgba(255,255,255,.06); border: 2px solid var(--suave);
-    transition: background .12s ease, transform .12s ease; display: inline-flex; align-items: center; gap: 8px; }
-  button:hover, label.botao:hover { background: rgba(255,255,255,.13); transform: translateY(-1px); }
-  button:active, label.botao:active { transform: translateY(1px); }
-  label.botao input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-  .estado { margin-top: 14px; min-height: 1.4em; font-size: .95rem; color: var(--suave); }
-  .estado.ok { color: #9ff0b5; } .estado.erro { color: var(--erro); }
-  .grade2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-  .grade2 p { margin: 0 0 8px; color: var(--suave); line-height: 1.55; }
-  .grade2 strong { color: var(--texto); }
-  .quadro { margin: 0; border-radius: var(--raio); overflow: hidden; border: 3px solid var(--borda);
-    box-shadow: 0 10px 0 rgba(5,10,25,.55), 0 24px 60px rgba(0,0,0,.45); background: #0b1430; aspect-ratio: 16 / 9; }
-  .quadro img { display: block; width: 100%; height: 100%; object-fit: cover; }
-  footer { text-align: center; color: var(--suave); font-size: .85rem; opacity: .85; }
-  @media (prefers-reduced-motion: reduce) { .cristal, .ceu i { animation: none; } }
+  html { background: var(--fundo); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; min-height: 100vh; background: var(--mar); color: var(--espuma); overflow-x: hidden;
+    font: 700 1.05rem/1.55 var(--f-texto); }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--agua); outline-offset: 3px; }
+  .so-leitor { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+  /* ---------------------------------------------------------------- abertura */
+  .abertura { max-width: var(--max); margin: 0 auto; padding: clamp(28px, 5vw, 64px) var(--gutter) 0;
+    display: grid; grid-template-columns: minmax(0, 1fr); row-gap: clamp(24px, 3vw, 40px); }
+  .credito { margin: 0 0 .9rem; font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
+    color: rgba(238, 244, 248, .85); text-shadow: var(--contorno-1); }
+  h1 { margin: 0; font: 700 var(--t-titulo)/.9 var(--f-titulo); color: var(--espuma); letter-spacing: .005em;
+    text-shadow: var(--contorno-3), 0 6px 0 rgba(14, 15, 20, .35); }
+  h1 span { display: block; }
+  h1 .recuo { padding-left: 1.6em; }
+  .fatos { margin: 1.2rem 0 0; font-size: 1rem; color: var(--espuma); text-shadow: var(--contorno-1); }
+  .jogar { position: relative; display: inline-flex; align-items: center;
+    gap: 16px; margin-top: 1.6rem; padding: 12px 30px 12px 20px; min-height: 76px;
+    background: var(--espuma); color: var(--tinta); border: 2px solid var(--tinta); border-radius: 6px;
+    text-decoration: none; box-shadow: 0 10px 24px rgba(7, 13, 28, .35);
+    transition: transform var(--rapido) var(--saida); }
+  .jogar-cristal { position: relative; flex: none; width: 22px; height: 52px; }
+  .jogar-txt { display: grid; }
+  .jogar-cristal img { position: absolute; }
+  .jogar-cristal .cristal { width: 22px; height: 52px; transition: transform var(--rapido) var(--saida); }
+  .jogar-cristal .luz { width: 40px; height: 40px; left: -9px; top: 6px; opacity: 0; mix-blend-mode: screen;
+    transition: opacity var(--rapido) var(--saida); }
+  .jogar-rotulo { font: 700 1.7rem/1 var(--f-titulo); }
+  .jogar-linha { font-size: .9rem; line-height: 1.25; color: #2B3A4A; margin-top: 4px; }
+  .jogar-linha:empty { display: none; }
+  .jogar:hover .cristal, .jogar:focus-visible .cristal { transform: translateY(-3px); }
+  .jogar:hover .luz, .jogar:focus-visible .luz { opacity: .7; }
+  .jogar:active { transform: translateY(1px); }
+  .dica { margin: 1rem 0 0; max-width: 34rem; font-size: .95rem; color: var(--espuma); text-shadow: var(--contorno-1); }
+
+  .agora { align-self: end; padding: 20px 22px; background: var(--painel); border: 1px solid var(--painel-borda);
+    border-radius: 4px; }
+  .agora-rotulo { margin: 0; font-size: .75rem; letter-spacing: .24em; text-transform: uppercase; color: var(--espuma-2); }
+  .agora-espaco { margin: .2rem 0 .4rem; font: 700 1.8rem/1.1 var(--f-titulo); }
+  .agora p { margin: 0; }
+  .num { font-family: var(--f-texto); font-size: .86em; }
+  .agora .fraco { color: var(--espuma-2); font-size: .95rem; }
+  .agora-vazio { margin: 0; font-size: 1.1rem; }
+  .cristais { display: flex; gap: 6px; margin: .7rem 0; }
+  .cristais img { width: 12px; height: 28px; }
+  .apagado { filter: grayscale(1) brightness(.45); }
+
+  /* faixa dos mapas: as pontas fundem no mar da pagina (mascara sobre a arte) */
+  .mapas { position: relative; margin: 0 calc(var(--gutter) * -1); overflow: hidden; }
+  .trilho { display: flex; will-change: transform; }
+  .mapa { position: relative; flex: 0 0 50%; margin: 0; }
+  .mapa > img { width: 100%; height: auto; aspect-ratio: 16 / 9;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%),
+      linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
+    mask-composite: intersect; }
+  /* o mar do mapa do Oceano e mais saturado (#2880BF): saturate(.77) leva ele
+     exatamente ao --mar (#397DAD), e as duas placas viram um mar so */
+  #mapa-oceano > img { filter: saturate(.77); }
+  .arraste { display: none; margin: .4rem 0 0; font-size: .85rem; color: var(--espuma); text-shadow: var(--contorno-1); }
+
+  .pino { position: absolute; width: 40px; height: 58px; margin: 0; padding: 0 0 2px; transform: translate(-50%, -100%);
+    background: none; border: 0; cursor: pointer; display: flex; justify-content: center; align-items: flex-end; }
+  .pino img { position: absolute; pointer-events: none; }
+  .pino .cristal { width: 16px; height: 38px; bottom: 2px; transition: transform var(--rapido) var(--saida); }
+  .pino .luz { width: 44px; height: 44px; bottom: 0; mix-blend-mode: screen; opacity: 0; }
+  .pino.aceso .luz { animation: pulso-pino 3.2s ease-in-out infinite alternate; }
+  .pino:not(.aceso) .cristal { filter: grayscale(1) brightness(.45); }
+  .pino-nome { position: absolute; bottom: 100%; left: 50%; transform: translate(-50%, 4px); white-space: nowrap;
+    font-size: .85rem; color: var(--espuma); text-shadow: var(--contorno-2); opacity: 0; pointer-events: none;
+    transition: opacity var(--rapido) var(--saida), transform var(--rapido) var(--saida); }
+  .pino:hover .cristal, .pino:focus-visible .cristal { transform: translateY(-4px); }
+  .pino:hover .pino-nome, .pino:focus-visible .pino-nome { opacity: 1; transform: translate(-50%, 0); }
+  @keyframes pulso-pino { from { opacity: .35; } to { opacity: .6; } }
+
+  /* --------------------------------------------- o mergulho (do mar ao abismo) */
+  .mergulho { background: linear-gradient(180deg, var(--mar) 0, var(--mar-borda) 300px, var(--abismo) 900px,
+    var(--fundo) 1700px); background-color: var(--fundo); padding: var(--ritmo-abertura) 0 0; }
+  .secao { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  h2 { margin: 0; font: 700 var(--t-secao)/1 var(--f-titulo); color: var(--espuma); text-shadow: var(--contorno-2); }
+  h3 { margin: 0; font: 700 1.4rem/1.1 var(--f-titulo); color: var(--espuma); }
+  .alm-topo { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .4rem 2rem; }
+  .contador { margin: 0; font-size: 1.1rem; }
+  /* número na letra do texto, como o .num: o "1" da Almendra parece um "I" ("11" lia "II") */
+  .contador b { font: 700 1.6rem/1 var(--f-texto); color: var(--agua); }
+  .legenda { margin: .5rem 0 0; color: var(--espuma-2); font-size: .95rem; }
+  .prateleira { margin-top: 3rem; }
+  .prateleira h3 { margin-bottom: 1.1rem; color: var(--espuma); font-size: clamp(1.6rem, 1rem + 1vw, 2.1rem); letter-spacing: .01em;
+    text-shadow: var(--contorno-1); }
+  .prat-intro p { margin: 0 0 .6rem; max-width: 22rem; color: var(--espuma-2); }
+  .prat-intro .no-time { color: var(--espuma); }
+  .prat-intro h3 + p { margin-top: -.4rem; }
+  @media (min-width: 1180px) {
+    .prat-herois { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 3fr); gap: 28px; }
+    .prat-intro { padding-top: .4rem; border-top: 1px solid var(--painel-borda); }
+  }
+  /* tablet em pe: o heroi desbloqueavel nao pode sair menor que o chefe. O cartao fica mais
+     alto e a frase (que tambem esta no detalhe) sai do cartao. */
+  @media (min-width: 761px) and (max-width: 1179px) {
+    .herois > .carta { aspect-ratio: 2 / 3; }
+    .herois .carta-frase { display: none; }
+  }
+
+  /* ------------------------------------------------------------ os cartoes */
+  .herois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 28px); }
+  .carta { position: relative; display: flex; flex-direction: column; width: 100%; padding: 0; margin: 0; overflow: hidden;
+    aspect-ratio: 3 / 4; border: 0; border-radius: 4px; background: var(--fundo); text-align: left; cursor: pointer;
+    container-type: inline-size; transition: transform var(--rapido) var(--saida); -webkit-tap-highlight-color: transparent; }
+  .carta.aceso { transform: translateY(-6px); }
+  .carta:active { transform: translateY(-3px); }
+  .carta-placa, .carta-quadro { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    filter: brightness(.52); transition: filter var(--rapido) var(--saida); }
+  .carta-palco { position: relative; flex: 1 1 auto; min-height: 0; margin: 7% 6% 0; }
+  /* a luz pintada do elemento fica DEITADA no chao, sob os pes (uma poca de luz), e so no
+     cartao aceso: nada de bola de luz atras do personagem nem contorno colorido (RESPIRO 0.1.7) */
+  .carta-luz { position: absolute; left: 50%; bottom: -4%; width: 70%; height: auto; aspect-ratio: 1;
+    transform: translateX(-50%) scaleY(.3); transform-origin: 50% 100%;
+    mix-blend-mode: screen; opacity: 0; transition: opacity var(--rapido) var(--saida); }
+  .carta-figura { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%;
+    filter: drop-shadow(0 10px 8px rgba(7, 13, 28, .6)); transition: filter var(--rapido) var(--saida); }
+  .carta.aceso .carta-luz { opacity: var(--luz-a, .55); }
+  .carta-particulas img { position: absolute; bottom: 10%; width: 18px; height: 18px; opacity: 0; mix-blend-mode: screen; }
+  .carta-particulas img:nth-child(1) { left: 26%; width: 16px; height: 16px; }
+  .carta-particulas img:nth-child(2) { left: 44%; width: 22px; height: 22px; }
+  .carta-particulas img:nth-child(3) { left: 60%; width: 14px; height: 14px; }
+  .carta-particulas img:nth-child(4) { left: 72%; width: 20px; height: 20px; }
+  .carta.aceso:not(.bloqueado) .carta-particulas img { animation: subir 3s ease-out infinite; }
+  .carta.aceso .carta-particulas img:nth-child(2) { animation-duration: 3.6s; animation-delay: .7s; }
+  .carta.aceso .carta-particulas img:nth-child(3) { animation-duration: 2.4s; animation-delay: 1.3s; }
+  .carta.aceso .carta-particulas img:nth-child(4) { animation-duration: 3.2s; animation-delay: 2s; }
+  @keyframes subir { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-80px); } }
+
+  .carta-texto { position: relative; display: grid; gap: 2px; padding: 3% 7% 7%; }
+  .carta-classe { font-size: clamp(.68rem, 3.4cqi, .8rem); letter-spacing: .16em; text-transform: uppercase; color: var(--cor);
+    text-shadow: var(--contorno-1); }
+  .carta-nome { font: 700 clamp(1.25rem, 9cqi, 2.2rem)/1.05 var(--f-titulo); color: var(--espuma); text-shadow: var(--contorno-2); }
+  .carta-frase { font-size: clamp(.8rem, 4cqi, .98rem); line-height: 1.4; color: var(--espuma); text-shadow: var(--contorno-1); }
+  .carta-frase:empty { display: none; }
+  .carta-estado { margin-top: 4px; font-size: clamp(.76rem, 3.8cqi, .9rem); line-height: 1.35; color: var(--espuma-2);
+    text-shadow: var(--contorno-1); }
+  .carta-estado.selo { color: var(--ouro); }
+
+  /* bloqueado: o lugar aparece como pista; chefe nao encontrado vira silhueta */
+  .carta.bloqueado .carta-placa, .carta.oculto .carta-placa { filter: brightness(.28) saturate(.6); }
+  .carta.bloqueado .carta-luz, .carta.oculto .carta-luz { opacity: 0; }
+  .carta.bloqueado.aceso .carta-luz { opacity: .2; }
+  .carta.bloqueado .carta-figura { filter: none; }
+  /* silhueta: so a forma escura com uma borda fria de 1 px para destacar do fundo (sem neon) */
+  .carta.oculto .carta-figura { filter: brightness(0) drop-shadow(0 0 1px rgba(183, 204, 218, .55)); }
+  .carta.oculto .carta-nome { letter-spacing: .12em; }
+
+  /* Tita: o quadro do filme no lugar da placa, da luz e do personagem */
+  .carta-tita { aspect-ratio: auto; flex: 1 1 auto; min-height: 0; justify-content: flex-end; }
+  .carta-tita .carta-quadro { filter: brightness(1); transition: filter var(--rapido) var(--saida), transform 6s linear; }
+  .carta-tita.oculto .carta-quadro { filter: brightness(.16) saturate(.3); }
+  .carta-tita.visto .carta-quadro { filter: brightness(.55); }
+  .carta-tita.aceso .carta-quadro { transform: scale(1.04); }
+  .carta-tita.aceso:not(.oculto) { box-shadow: 0 0 0 1px var(--painel-borda), 0 18px 40px -12px rgba(0, 0, 0, .7); }
+  /* o texto fica sobre o corpo e o fogo do filme: um escuro no pe do quadro (gradiente de fundo, nao desenho) */
+  .carta-tita .carta-texto { padding-top: 14%; background: linear-gradient(180deg, rgba(7, 13, 28, 0) 0,
+    rgba(7, 13, 28, .72) 42%, rgba(7, 13, 28, .9) 100%); }
+  .carta-tita .carta-classe { color: var(--espuma-2); }
+  .carta-tita .carta-texto > * { max-width: 26rem; }
+
+  /* chefes: na ordem do jogo; a regua de cima junta os cartoes da mesma regiao */
+  .chefes { container-type: inline-size; }
+  .chefes-grade { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 16px; row-gap: 2.6rem; }
+  .chefe { display: flex; flex-direction: column; min-width: 0; container-type: inline-size; }
+  .chefe.largo { grid-column: span 2; }
+  /* uma linha so: nome longo (Ruinas do Templo Estelar) passa por cima da regua do vizinho do mesmo grupo */
+  .regiao { display: flex; align-items: center; gap: 8px; height: 2.6rem; margin-bottom: .7rem; padding-top: .7rem;
+    border-top: 1px solid var(--painel-borda); font: 700 clamp(.85rem, 7cqi, 1.05rem)/1.1 var(--f-texto);
+    letter-spacing: .04em; color: var(--espuma-2); white-space: nowrap; }
+  .regiao img { width: 10px; height: 24px; flex: none; }
+  .regiao:focus { outline: none; }
+  .regiao:focus-visible { outline: 3px solid var(--agua); }
+
+  /* ------------------------------------------------------------ jogos salvos */
+  .salvos { margin-top: 6rem; }
+  .painel { margin-top: 1.4rem; padding: clamp(18px, 3vw, 32px); background: var(--painel); border: 1px solid var(--painel-borda);
+    border-radius: 4px; }
+  .sub { margin: .5rem 0 0; color: var(--espuma-2); max-width: 44rem; }
+  .espacos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
+  .espaco { display: grid; align-content: start; gap: 4px; padding: 4px 24px 8px; border-left: 1px solid var(--painel-borda); }
+  .espaco:first-child { padding-left: 0; border-left: 0; }
+  .espaco-nome { font: 700 1.5rem/1.2 var(--f-titulo); }
+  .espaco .fraco { color: var(--espuma-2); font-size: .95rem; }
+  .espaco.vazio .espaco-nome { color: var(--espuma-2); }
+  .acoes { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--painel-borda); }
+  .botao-texto { position: relative; display: inline-block; padding: 8px 0; background: none; border: 0; cursor: pointer;
+    color: var(--espuma); text-decoration: underline 1px; text-underline-offset: 6px; transition: transform var(--rapido) var(--saida); }
+  .botao-texto:hover, .botao-texto:focus-within { text-decoration-thickness: 2px; text-decoration-color: var(--agua); }
+  .botao-texto:active { transform: translateY(1px); }
+  .botao-texto:disabled { opacity: .45; cursor: default; text-decoration: none; }
+  .botao-texto input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .estado { min-height: 1.5em; margin: .8rem 0 0; color: var(--espuma-2); }
+  .estado.ok { color: var(--ok); } .estado.erro { color: var(--erro); }
+
+  /* ------------------------------------------------------- como jogar, colofao */
+  .como { margin-top: 4rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem clamp(24px, 4vw, 64px); }
+  .como h2 { grid-column: 1 / -1; font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem); }
+  .como p { margin: 0 0 .8rem; color: var(--espuma-2); }
+  .como strong { color: var(--espuma); }
+  .colofao { max-width: var(--max); margin: 4rem auto 0; padding: 1.6rem var(--gutter) 3rem; color: var(--espuma-2); font-size: .95rem; }
+  .colofao p { margin: 0; max-width: 46rem; border-top: 1px solid var(--painel-borda); padding-top: 1.4rem; }
+  .colofao strong { color: var(--espuma); font-family: var(--f-titulo); font-size: 1.15rem; }
+
+  /* ------------------------------------------------------------ o detalhe */
+  dialog.detalhe { width: min(920px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--painel-borda);
+    border-radius: 4px; background: var(--fundo); color: var(--espuma); overflow: auto; }
+  dialog.detalhe::backdrop { background: rgba(7, 13, 28, .82); }
+  dialog.detalhe:not([open]) { display: none; }
+  /* navegador sem showModal: o mesmo detalhe, preso no centro, e o escuro em volta */
+  dialog.detalhe.sem-modal[open] { position: fixed; inset: 0; margin: auto; z-index: 10; height: fit-content;
+    box-shadow: 0 0 0 100vmax rgba(7, 13, 28, .82); }
+  .det { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+  /* a arte acompanha a altura do texto (nada de faixa vazia embaixo dela) */
+  .det-arte { position: relative; margin: 0; min-height: 440px; overflow: hidden; background: var(--abismo); }
+  .det-arte .carta-placa { filter: brightness(.6); }
+  .det-arte .carta-palco { position: absolute; inset: 8% 6% 6%; margin: 0; }
+  .det-arte .carta-luz { opacity: var(--luz-a, .55); }
+  .det-arte.oculto .carta-placa { filter: brightness(.28) saturate(.6); }
+  .det-arte.oculto .carta-luz { opacity: 0; }
+  .det-arte.oculto .carta-figura { filter: brightness(0) drop-shadow(0 0 1px rgba(183, 204, 218, .55)); }
+  .det-arte.tita { min-height: 0; aspect-ratio: 16 / 9; }
+  .det-arte video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .det-texto { padding: clamp(20px, 3vw, 36px); display: grid; align-content: start; gap: .5rem; }
+  .det-texto h3 { font-size: clamp(2rem, 1.4rem + 2vw, 3rem); text-shadow: var(--contorno-2); }
+  .det-classe { margin: 0; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cor); }
+  .det-texto p { margin: 0; }
+  .det-frase { font-size: 1.1rem; }
+  .det-estado { color: var(--espuma-2); }
+  .det-estado.selo { color: var(--ouro); }
+  .det-botoes { display: flex; flex-wrap: wrap; gap: 10px; margin: .6rem 0 .2rem; }
+  .det-botoes:empty { display: none; }
+  .botao { padding: 10px 16px; background: var(--espuma); color: var(--tinta); border: 2px solid var(--tinta); border-radius: 6px;
+    cursor: pointer; transition: transform var(--rapido) var(--saida); }
+  .botao:hover { transform: translateY(-2px); }
+  .botao:active { transform: translateY(1px); }
+  .botao[aria-pressed="true"] { background: var(--cor); }
+  .det-texto h4 { margin: .8rem 0 0; font: 700 1.15rem/1.2 var(--f-titulo); color: var(--espuma-2); }
+  .det-texto ul { margin: .2rem 0 0; padding-left: 1.1rem; }
+  .det-fechar { justify-self: start; margin-top: 1rem; }
+  .det.tita-det { grid-template-columns: 1fr; }
+
+  /* ------------------------------------------------------------ larguras */
+  @media (min-width: 1024px) {
+    .abertura { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; min-height: min(100svh, 880px); align-content: start; }
+    .abertura-texto { grid-column: 1 / 8; }
+    .agora { grid-column: 8 / 13; justify-self: end; width: 100%; max-width: 440px; }
+    .mapas { grid-column: 1 / -1; margin: 0; }
+  }
+  @media (max-width: 1023px) {
+    .mapas { overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+    .mapas::-webkit-scrollbar { display: none; }
+    .trilho { width: max-content; padding: 0 var(--gutter); gap: 0; }
+    .mapa { flex: 0 0 calc(100vw - 2 * var(--gutter)); scroll-snap-align: center; }
+    .arraste { display: block; }
+    .chefes-grade { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .herois, .chefes-grade { display: flex; gap: 14px; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 10px;
+      overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; }
+    .herois > .carta { flex: 0 0 78vw; scroll-snap-align: start; }
+    .chefe { flex: 0 0 68vw; scroll-snap-align: start; }
+    .chefe.largo { flex-basis: 92vw; }
+    .chefe .carta { height: calc(68vw * 4 / 3); aspect-ratio: auto; }
+    .espacos { grid-template-columns: 1fr; }
+    .espaco, .espaco:first-child { padding: 14px 0; border-left: 0; border-top: 1px solid var(--painel-borda); }
+    .espaco:first-child { border-top: 0; padding-top: 4px; }
+    .como { grid-template-columns: 1fr; }
+    .det { grid-template-columns: 1fr; }
+    .det-arte { min-height: 0; aspect-ratio: 4 / 3; }
+    .pino .cristal { width: 12px; height: 28px; }
+    .pino .luz { width: 34px; height: 34px; }
+    .jogar { display: flex; width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; }
+    .carta-particulas { display: none; }
+    .trilho { transform: none !important; }
+  }
 </style>
 </head>
 <body>
-<div class="capa" aria-hidden="true"></div>
-<div class="ceu" id="ceu" aria-hidden="true"></div>
-<main>
-  <header>
-    <svg class="cristal" viewBox="0 0 64 64" aria-hidden="true">
-      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8fbff"/><stop offset=".5" stop-color="#6cc4ff"/><stop offset="1" stop-color="#2b5fd1"/></linearGradient></defs>
-      <path d="M32 3 50 24 32 61 14 24Z" fill="url(#g)" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M14 24h36M32 3 25 24l7 37 7-37Z" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/>
-    </svg>
-    <h1>Cristais de Lumen</h1>
-    <p class="lema">Acenda os cristais e traga a luz de volta ao reino.</p>
-    <a class="jogar" href="jogo/" id="jogar">▶ Jogar agora</a>
+<header class="abertura" id="topo">
+  <div class="abertura-texto">
+    <p class="credito">Um jogo de Matheus Marques</p>
+    <h1><span>Cristais</span> <span class="recuo">de Lumen</span></h1>
+    <p class="fatos">8 heróis · 8 regiões · 15 chefes · 3 espaços de jogo salvo</p>
+    <a class="jogar" href="jogo/" id="jogar">
+      <span class="jogar-cristal" aria-hidden="true">
+        <img class="luz" src="launcher/luz/luz_agua.webp" width="256" height="256" alt="">
+        <img class="cristal" src="launcher/luz/cristal.webp" width="51" height="120" alt="">
+      </span>
+      <span class="jogar-txt">
+        <span class="jogar-rotulo" id="jogar-rotulo">Jogar</span>
+        <span class="jogar-linha" id="jogar-linha"></span>
+      </span>
+    </a>
     <p class="dica" id="dica">Funciona no computador e no tablet. A primeira abertura demora um pouco: o jogo é grande.</p>
-  </header>
-
-  <figure class="quadro"><img src="capa.jpg" width="1280" height="720" alt="Kael, Lina e Nara olham o vale e o castelo ao longe, à noite"></figure>
-
-  <section class="cartao" aria-labelledby="t-saves">
-    <h2 id="t-saves">Seus jogos salvos</h2>
-    <p class="sub">Ficam guardados neste aparelho e neste navegador. Baixe uma cópia para não perder nada.</p>
-    <div class="espacos" id="espacos"></div>
-    <div class="acoes">
-      <button type="button" id="baixar">⬇ Baixar cópia dos meus jogos</button>
-      <label class="botao">⬆ Carregar cópia de um arquivo<input type="file" id="arquivo" accept=".json,application/json"></label>
+  </div>
+  <aside class="agora" id="agora" aria-label="Seu jogo agora">
+    <p class="agora-vazio">Comece no Espaço 1. O jogo salva sozinho neste aparelho.</p>
+  </aside>
+  <div class="mapas" id="mapas">
+    <div class="trilho" id="trilho">
+      <figure class="mapa" id="mapa-ilha">
+        <img src="launcher/mapa_ilha.webp" width="1280" height="720" fetchpriority="high"
+          alt="Mapa da ilha: a Floresta, a Caverna de Cristal, o Castelo Sombrio, a vila da Catedral de Aurora e o mar das Ruínas">
+      </figure>
+      <figure class="mapa" id="mapa-oceano">
+        <img src="launcher/mapa_oceano.webp" width="1280" height="720"
+          alt="Mapa do Oceano: o abismo de Mercanteaus, o vulcão da Ilha Faialis e Chiaroscuro Lumina sobre as nuvens">
+      </figure>
     </div>
-    <div class="estado" id="estado" role="status" aria-live="polite"></div>
-  </section>
+  </div>
+  <p class="arraste" id="arraste">Arraste para ver o Oceano</p>
+</header>
 
-  <section class="cartao" aria-labelledby="t-como">
-    <h2 id="t-como">Como jogar</h2>
-    <div class="grade2">
+<div class="mergulho">
+  <main>
+    <section class="secao almanaque" id="almanaque" aria-labelledby="t-alm" tabindex="-1">
+      <div class="alm-topo">
+        <h2 id="t-alm">Almanaque de Lumen</h2>
+        <p class="contador" id="contador"><b>0</b> de 15 encontrados</p>
+      </div>
+      <p class="legenda">Vencido, Visto e Ainda não encontrado: o almanaque lê os jogos salvos deste aparelho.</p>
+
+      <div class="prateleira prat-herois" aria-labelledby="t-herois">
+        <div class="prat-intro">
+          <h3 id="t-herois">Heróis desbloqueáveis</h3>
+          <p>Três heróis começam como chefes. Vencidos, entram no seu time.</p>
+          <p class="no-time" id="no-time"></p>
+        </div>
+        <div class="herois" id="herois"></div>
+      </div>
+
+      <div class="prateleira chefes" aria-labelledby="t-chefes">
+        <h3 id="t-chefes">Chefes pelo caminho</h3>
+        <div class="chefes-grade" id="chefes"></div>
+      </div>
+    </section>
+
+    <section class="secao salvos" aria-labelledby="t-saves">
+      <h2 id="t-saves">Seus jogos salvos</h2>
+      <p class="sub">Ficam guardados neste aparelho e neste navegador. Baixe uma cópia para não perder nada.</p>
+      <div class="painel">
+        <div class="espacos" id="espacos"></div>
+        <div class="acoes">
+          <button type="button" class="botao-texto" id="baixar">Baixar cópia dos meus jogos</button>
+          <label class="botao-texto">Carregar cópia de um arquivo<input type="file" id="arquivo" accept=".json,application/json"></label>
+        </div>
+        <p class="estado" id="estado" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="secao como" aria-labelledby="t-como">
+      <h2 id="t-como">Como jogar</h2>
       <div>
         <p><strong>No computador:</strong> setas e Enter, ou o mouse.</p>
         <p><strong>No tablet ou celular:</strong> toque na tela. Deite o aparelho para jogar.</p>
@@ -135,156 +428,517 @@
         <p><strong>Trocar de aparelho:</strong> baixe a cópia aqui, mande o arquivo para o outro aparelho e use “Carregar cópia”.</p>
         <p><strong>Modo anônimo</strong> não guarda o jogo: use o navegador normal.</p>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
+  <footer class="colofao">
+    <p><strong>Cristais de Lumen</strong>, um jogo de Matheus Marques. Títulos em Almendra; texto em Andika, uma letra feita para quem está aprendendo a ler. <span id="versao">Versão de 09/10/2026.</span></p>
+  </footer>
+</div>
 
-  <footer>Desenvolvido por Matheus Marques</footer>
-</main>
-<script>
-(function () {
-  "use strict";
-  var PREFIXO = "CristaisdeLumen.0.CristaisdeLumen.0.";
-  var ESPACOS = 3;
-  var TOTAL_CRISTAIS = 8;
-  var NOMES = { kael: "Kael", lina: "Lina", nara: "Nara", auriel: "Auriel", irvyng: "Irvyng",
-                tayia: "Tayia", josaph: "Josaph", algaz: "Algaz" };
-  var LUGARES = [["floresta", "Floresta Verdejante"], ["caverna", "Caverna de Cristal"], ["castelo", "Castelo Sombrio"],
-                 ["catedral", "Catedral de Aurora"], ["templo_estelar", "Ruínas do Templo Estelar"],
-                 ["mercanteaus", "Mercanteaus"], ["faialis", "Ilha Faialis"], ["chiaroscuro", "Chiaroscuro Lumina"]];
+<dialog class="detalhe" id="detalhe" aria-labelledby="det-nome">
+  <div class="det" id="det"></div>
+</dialog>
 
-  function chave(n) { return PREFIXO + (n === 1 ? "lumen_remake_save.json" : "lumen_remake_save_" + n + ".json"); }
-  function ler(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
-  function gravar(k, v) { try { window.localStorage.setItem(k, v); return true; } catch (e) { return false; } }
-  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+<script type="module">
+/* ARTE:INICIO (gerado por ferramentas/web/montar_launcher.py; nao editar a mao) */
+var VERSAO = "10/10/2026";
+var MEDIDAS = {"cen_castelo_fundo":[420,560],"cen_catedral_fundo":[420,560],"cen_caverna_fundo":[420,560],"cen_chiaro_praca_fundo":[420,560],"cen_chiaro_torre_fundo":[540,720],"cen_faialis_cratera_fundo":[540,720],"cen_faialis_templo_fundo":[420,560],"cen_merc_caverna_fundo":[420,560],"cen_merc_jardins_fundo":[420,560],"cen_merc_salao_fundo":[420,560],"cen_merc_topo_fundo":[540,720],"cen_templo_fundo":[420,560],"cine_tita_garuron_despertar_16":[880,495],"cine_tita_marceas_retorno_16":[880,495],"cristal":[51,120],"heroi_algaz_despertar_parado":[252,250],"heroi_algaz_parado":[202,250],"heroi_josaph_mimica":[310,262],"heroi_josaph_parado":[258,264],"heroi_tayia_despertar_parado":[342,241],"heroi_tayia_parado":[310,211],"monstro_auriel_parado":[157,180],"monstro_bifronte_parado":[271,240],"monstro_golem_parado":[299,210],"monstro_irvyng_parado":[229,240],"monstro_leviata_maior_parado":[220,160],"monstro_leviata_parado":[238,180],"monstro_marceas_parado":[290,160],"monstro_marmellia_parado":[220,160],"monstro_rei_parado":[241,240],"monstro_tempestara_parado":[189,160]};
+/* ARTE:FIM */
 
-  // O GameMaker grava base64 dos bytes (JSON + "\0"): decodifica em UTF-8.
-  function decodificar(b64) {
-    try {
-      var bin = atob(b64), bytes = new Uint8Array(bin.length);
-      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      var txt = new TextDecoder("utf-8").decode(bytes).replace(/\u0000+$/, "");
-      return JSON.parse(txt);
-    } catch (e) { return null; }
-  }
-  function tempo(seg) {
-    seg = Math.max(0, Math.floor(seg || 0));
-    var h = Math.floor(seg / 3600), m = Math.floor((seg % 3600) / 60);
-    return h ? h + "h " + (m < 10 ? "0" : "") + m + "min" : m + "min";
-  }
-  function resumo(s) {
-    var cristais = 0, lugar = "";
-    LUGARES.forEach(function (L) {
-      if (s.vencidas && s.vencidas[L[0]] === true) cristais++;
-      else if (s.regioes && s.regioes[L[0]] === true) lugar = L[1];
-    });
-    var nivel = 1;
-    (s.equipe || []).forEach(function (h) { if (h && h.nivel > nivel) nivel = h.nivel; });
-    var time = (s.time || []).map(function (id) { return NOMES[id] || id; }).join(", ");
-    return { cristais: cristais, nivel: nivel, tempo: tempo(s.tempo_jogo), time: time, lugar: lugar };
-  }
+const PREFIXO = "CristaisdeLumen.0.CristaisdeLumen.0.", ESPACOS = 3, TOTAL = 8;
+const NOMES = { kael: "Kael", lina: "Lina", nara: "Nara", auriel: "Auriel", irvyng: "Irvyng",
+  tayia: "Tayia", josaph: "Josaph", algaz: "Algaz" };
+const LUGARES = [["floresta", "Floresta Verdejante"], ["caverna", "Caverna de Cristal"], ["castelo", "Castelo Sombrio"],
+  ["catedral", "Catedral de Aurora"], ["templo_estelar", "Ruínas do Templo Estelar"],
+  ["mercanteaus", "Mercanteaus"], ["faialis", "Ilha Faialis"], ["chiaroscuro", "Chiaroscuro Lumina"]];
+const NOME_LUGAR = Object.fromEntries(LUGARES);
 
-  function desenhar() {
-    var box = document.getElementById("espacos");
-    box.textContent = "";
-    var algum = false;
-    for (var n = 1; n <= ESPACOS; n++) {
-      var bruto = ler(chave(n));
-      var card = el("div", "espaco");
-      card.appendChild(el("div", "nome", "Espaço " + n));
-      if (!bruto) {
-        card.classList.add("vazio");
-        card.appendChild(el("div", "fraco", "Vazio. Um jogo novo pode começar aqui."));
-      } else {
-        algum = true;
-        var s = decodificar(bruto);
-        if (!s) {
-          card.appendChild(el("div", "fraco", "Este jogo salvo não abriu aqui (o jogo tenta de novo ao abrir)."));
-        } else {
-          var r = resumo(s);
-          card.appendChild(el("div", "linha", "Nível " + r.nivel + " · " + r.tempo + " de jogo"));
-          card.appendChild(el("div", "fraco", r.time ? "Time: " + r.time : ""));
-          card.appendChild(el("div", "fraco", r.lugar ? "Próxima parada: " + r.lugar : (r.cristais >= TOTAL_CRISTAIS ? "Todos os cristais acesos!" : "")));
-          var gemas = el("div", "gemas");
-          gemas.setAttribute("aria-label", r.cristais + " de " + TOTAL_CRISTAIS + " cristais acesos");
-          for (var g = 0; g < TOTAL_CRISTAIS; g++) gemas.appendChild(el("b", g < r.cristais ? "acesa" : ""));
-          card.appendChild(gemas);
-        }
-      }
-      box.appendChild(card);
-    }
-    document.getElementById("baixar").disabled = !algum;
-    document.getElementById("jogar").textContent = algum ? "▶ Continuar jogando" : "▶ Jogar agora";
-  }
+// Pinos: onde o cristal fica de pe, em px da placa 1280x720 do mapa (medido em
+// cima do desenho; o Templo Estelar fica no mar, onde o jogo poe o botao dele).
+// [regiao, mapa, x, y, nome curto]
+const PINOS = [["floresta", "ilha", 213, 470, "Floresta"], ["caverna", "ilha", 587, 330], ["castelo", "ilha", 880, 175],
+  ["catedral", "ilha", 765, 485], ["templo_estelar", "ilha", 1040, 80, "Templo Estelar"],
+  ["mercanteaus", "oceano", 573, 545], ["faialis", "oceano", 562, 235], ["chiaroscuro", "oceano", 1013, 125]];
 
-  function avisar(txt, tipo) {
-    var e = document.getElementById("estado");
-    e.textContent = txt;
-    e.className = "estado" + (tipo ? " " + tipo : "");
-  }
+// Textos do Almanaque (RESPIRO §A.5.2): para trocar um texto, e so aqui. Arte:
+// heroi_/monstro_<id>_parado, cen_<placa>_fundo, luz_<luz>, part_<part>; cor = token.
+const HEROIS = [
+  { id: "algaz", nome: "Algaz", classe: "Herdeiro do Mar", cor: "agua", placa: "merc_topo", luz: "agua", part: "bolha",
+    alt: ["Despertar do Oceano", "heroi_algaz_despertar_parado"],
+    frase: "Herdeiro de Mercanteaus. Luta com o tridente e chama as Três Bestas do Mar.",
+    como: "Vença o herdeiro no topo do castelo submerso, no Oceano.",
+    hab: ["Terremoto Abissal", "Cavalo-Marinho Gigante", "Tridente Supremo"],
+    chefe: "O Herdeiro Mercanteaus, no Topo do Castelo de Mercanteaus", regiao: "mercanteaus", time: true },
+  { id: "tayia", nome: "Tayia", classe: "Loba de Fogo", cor: "sol", placa: "faialis_cratera", luz: "sol", part: "brasa",
+    alt: ["Despertar do Sol", "heroi_tayia_despertar_parado"], video: "jogo/html5game/videos/ult_tayia.mp4",
+    frase: "A loba da Ilha Faialis. No Despertar ela vira a Guerreira Solar.",
+    como: "Ela guarda a Ilha Faialis, que aparece depois de Mercanteaus.",
+    hab: ["Pilar de Fogo", "Fênix de Fogo", "Claymore Solar"],
+    chefe: "Loba de Fogo de Faialis, na cratera da ilha", regiao: "faialis", time: false },
+  { id: "josaph", nome: "Josaph", classe: "Mímico", cor: "carta", placa: "chiaro_torre", luz: "agua", luzA: .25, part: "carta_luz",
+    alt: ["Mímica", "heroi_josaph_mimica"],
+    frase: "Copia um golpe do inimigo por 3 turnos. “Este palco é só a porta.”",
+    como: "Ele é o dono do palco de Chiaroscuro Lumina, a cidade dos ilusionistas.",
+    hab: ["Mímica", "Muralha Arco-íris", "Bis!"],
+    chefe: "O Mímico de Chiaroscuro, no palco da torre", regiao: "chiaroscuro", time: true }
+];
+// vence: [regiao vencida, marco, heroi recrutado]; visto: marco de chegada do Tita
+const CHEFES = [
+  { regiao: "caverna", id: "golem", nome: "Golem de Pedra", titulo: "Guardião da Caverna", placa: "caverna", luz: "agua", luzA: .3,
+    cor: "agua", pista: "Alguém guarda o fundo da Caverna de Cristal.", vence: ["caverna"] },
+  { regiao: "castelo", id: "rei", nome: "Rei das Sombras", titulo: "Senhor do Castelo", placa: "castelo", luz: "roxa", luzA: .35,
+    cor: "raio", pista: "Espera no alto do Castelo Sombrio.", vence: ["castelo"] },
+  { regiao: "catedral", id: "auriel", nome: "Auriel", titulo: "Guardião da Catedral", placa: "catedral", luz: "sol", luzA: .3,
+    cor: "sol", pista: "Uma catedral perto da vila esconde um paladino.", vence: ["catedral", "", "auriel"], entra: true },
+  { regiao: "templo_estelar", id: "leviata", nome: "Leviatã", titulo: "Serpente do Lago", placa: "templo", luz: "agua",
+    cor: "agua", pista: "Algo se mexe no lago das Ruínas.", vence: ["", "leviata"] },
+  { regiao: "templo_estelar", id: "irvyng", nome: "Irvyng", titulo: "Cavaleiro das Estrelas", placa: "templo", luz: "roxa",
+    cor: "raio", pista: "Um cavaleiro vigia o altar lunar.", vence: ["templo_estelar", "", "irvyng"], entra: true },
+  { regiao: "mercanteaus", id: "marceas", nome: "Marceas", titulo: "A Calamidade Mercanteaus", placa: "merc_caverna", luz: "agua",
+    cor: "agua", pista: "Uma caverna submersa no caminho do reino.", vence: ["", "marceas"] },
+  { regiao: "mercanteaus", id: "leviata_maior", nome: "Leviatã Maior", titulo: "Guardião do Castelo", placa: "merc_jardins",
+    luz: "agua", cor: "agua", pista: "Acorrentado nos jardins do castelo submerso.", vence: ["", "leviata_maior"] },
+  { regiao: "mercanteaus", id: "marmellia", nome: "Marmellia", titulo: "Rainha Consorte", placa: "merc_salao", luz: "sol", luzA: .3,
+    cor: "sol", pista: "A rainha não deixa ninguém passar do salão do trono.", vence: ["", "marmellia"] },
+  { regiao: "mercanteaus", id: "marceas_tita", nome: "Marceas, Titã", titulo: "O Titã do Abismo", tita: "cine_tita_marceas_retorno",
+    cor: "raio", pista: "Dizem que o abismo tem três cabeças.", vence: ["", "marceas_tita"], visto: "marceas_tita_chegou" },
+  { regiao: "faialis", id: "tempestara", nome: "Tempestara", titulo: "Guardiã do Templo Perdido", placa: "faialis_templo", luz: "sol",
+    cor: "sol", pista: "Um templo perdido no meio da ilha de fogo.", vence: ["", "tempestara"] },
+  { regiao: "faialis", id: "garuron", nome: "Garuron, Titã", titulo: "Rei Deus Fogo", tita: "cine_tita_garuron_despertar",
+    cor: "brasa", pista: "O vulcão da ilha não está dormindo.", vence: ["", "garuron"], visto: "garuron_chegou" },
+  { regiao: "chiaroscuro", id: "bifronte", nome: "Bifronte", titulo: "Máscara do Grande Teatro", placa: "chiaro_praca", luz: "agua",
+    luzA: .3, part: "carta_luz", cor: "carta", pista: "No grande teatro, as máscaras olham de volta.", vence: ["", "bifronte"] }
+];
 
-  document.getElementById("baixar").addEventListener("click", function () {
-    var copia = { jogo: "Cristais de Lumen", formato: 1, data: new Date().toISOString(), espacos: {} };
-    for (var n = 1; n <= ESPACOS; n++) { var v = ler(chave(n)); if (v) copia.espacos[n] = v; }
-    var blob = new Blob([JSON.stringify(copia, null, 1)], { type: "application/json" });
-    var a = document.createElement("a");
-    var d = new Date();
-    a.href = URL.createObjectURL(blob);
-    a.download = "cristais-de-lumen-jogos-" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ".json";
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-    avisar("Cópia baixada. Guarde o arquivo: com ele você recupera seus jogos em qualquer aparelho.", "ok");
-  });
+const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const semHover = matchMedia("(hover: none)").matches;
+const $ = (id) => document.getElementById(id);
+const obj = (v) => (v && typeof v === "object" ? v : {});
+const med = (n, padrao) => MEDIDAS[n] || padrao;
+function el(tag, cls, txt) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (txt != null) e.textContent = txt;
+  return e;
+}
+function foto(src, wh, cls, preguica) {
+  const i = el("img", cls);
+  if (preguica) i.loading = "lazy"; // antes do src
+  Object.assign(i, { width: wh[0], height: wh[1], alt: "", decoding: "async", src });
+  return i;
+}
+const cristal = (aceso, wh) => foto("launcher/luz/cristal.webp", wh || [12, 28], aceso ? "" : "apagado");
+const figura = (s, parado) => "launcher/anim/" + s + (parado || calmo ? "_p" : "") + ".webp";
 
-  document.getElementById("arquivo").addEventListener("change", function (ev) {
-    var f = ev.target.files && ev.target.files[0];
-    ev.target.value = "";
-    if (!f) return;
-    if (f.size > 2 * 1024 * 1024) { avisar("Esse arquivo é grande demais para ser uma cópia dos jogos.", "erro"); return; }
-    var leitor = new FileReader();
-    leitor.onload = function () {
-      var c;
-      try { c = JSON.parse(leitor.result); } catch (e) { c = null; }
-      if (!c || c.jogo !== "Cristais de Lumen" || typeof c.espacos !== "object" || !c.espacos) {
-        avisar("Esse arquivo não é uma cópia de jogos do Cristais de Lumen.", "erro"); return;
-      }
-      var validos = [];
-      for (var n = 1; n <= ESPACOS; n++) {
-        var v = c.espacos[n];
-        if (typeof v === "string" && /^[A-Za-z0-9+/=]+$/.test(v) && decodificar(v)) validos.push([n, v]);
-      }
-      if (!validos.length) { avisar("A cópia não tem nenhum jogo que abra.", "erro"); return; }
-      var ocupados = validos.filter(function (p) { var a = ler(chave(p[0])); return a && a !== p[1]; }).map(function (p) { return p[0]; });
-      if (ocupados.length && !window.confirm("Os espaços " + ocupados.join(", ") + " deste aparelho já têm jogos. Trocar pelos da cópia?")) {
-        avisar("Nada foi mudado.", ""); return;
-      }
-      var ok = validos.every(function (p) { return gravar(chave(p[0]), p[1]); });
-      desenhar();
-      avisar(ok ? "Pronto! Seus jogos foram carregados neste aparelho." : "O navegador não deixou gravar (modo anônimo?).", ok ? "ok" : "erro");
-    };
-    leitor.onerror = function () { avisar("Não consegui ler o arquivo.", "erro"); };
-    leitor.readAsText(f);
-  });
-
-  // estrelinhas do fundo (so enfeite; some com "reduzir movimento")
-  var ceu = document.getElementById("ceu");
-  for (var i = 0; i < 46; i++) {
-    var s = document.createElement("i");
-    s.style.left = (Math.random() * 100) + "%";
-    s.style.top = (Math.random() * 65) + "%";
-    s.style.animationDelay = (Math.random() * 5) + "s";
-    ceu.appendChild(s);
-  }
-
+// ------------------------------------------------------------ jogos salvos
+const chave = (n) => PREFIXO + (n === 1 ? "lumen_remake_save.json" : "lumen_remake_save_" + n + ".json");
+function ler(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function gravar(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+// O GameMaker grava base64 dos bytes (JSON + "\0"): decodifica em UTF-8.
+function decodificar(b64) {
   try {
-    var ua = navigator.userAgent || "";
-    var toque = /iPad|iPhone|Android|Mobile|Tablet/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua));
-    if (toque) document.getElementById("dica").textContent =
-      "No tablet ou celular: deite o aparelho e toque na tela. A primeira abertura demora um pouco.";
-  } catch (e) { /* so a dica */ }
+    const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    const s = JSON.parse(new TextDecoder("utf-8").decode(bytes).replace(/\u0000+$/, ""));
+    return s && typeof s === "object" ? s : null;
+  } catch (e) { return null; }
+}
+function tempo(seg) {
+  seg = Math.max(0, Math.floor(Number(seg) || 0));
+  const h = Math.floor(seg / 3600), m = Math.floor((seg % 3600) / 60);
+  return h ? h + "h " + (m < 10 ? "0" : "") + m + "min" : m + "min";
+}
+function resumo(s) {
+  const vencidas = obj(s.vencidas), regioes = obj(s.regioes);
+  let cristais = 0, lugar = "", nivel = 1;
+  for (const [id, nome] of LUGARES) {
+    if (vencidas[id] === true) cristais++;
+    else if (regioes[id] === true) lugar = nome; // a ultima aberta (como o jogo, save_resumo_de)
+  }
+  for (const h of Array.isArray(s.equipe) ? s.equipe : []) if (h && h.nivel > nivel) nivel = Math.floor(h.nivel);
+  const time = (Array.isArray(s.time) ? s.time : []).map((id) => NOMES[id] || String(id)).join(", ");
+  const para = lugar || (cristais >= TOTAL ? "todos os cristais acesos" : "");
+  return { cristais, vencidas, nivel, time, lugar, para, tempo: tempo(s.tempo_jogo), seg: Number(s.tempo_jogo) || 0 };
+}
+function lerEspacos() {
+  const lista = [];
+  for (let n = 1; n <= ESPACOS; n++) {
+    const bruto = ler(chave(n)), s = bruto ? decodificar(bruto) : null;
+    lista.push({ n, bruto, s, r: s ? resumo(s) : null });
+  }
+  return lista;
+}
+// Os 3 espacos juntos por OU.
+function juntar(lista) {
+  const J = { recrutados: {}, vencidas: {}, marcos: {} };
+  for (const e of lista) {
+    if (!e.s) continue;
+    for (const k of ["recrutados", "vencidas"]) {
+      const o = obj(e.s[k]);
+      for (const id in o) if (o[id] === true) J[k][id] = true;
+    }
+    const mar = obj(e.s.marcos);
+    for (const reg in mar) if (Array.isArray(mar[reg])) for (const id of mar[reg]) (J.marcos[reg] ||= {})[String(id)] = true;
+  }
+  return J;
+}
+const temMarco = (J, reg, id) => !!(id && J.marcos[reg] && J.marcos[reg][id]);
+function estadoChefe(c, J) {
+  const [reg, marco, heroi] = c.vence;
+  if ((reg && J.vencidas[reg]) || temMarco(J, c.regiao, marco) || (heroi && J.recrutados[heroi])) return "vencido";
+  return c.visto && temMarco(J, c.regiao, c.visto) ? "visto" : "oculto";
+}
+// O "1" da Almendra parece um I: o numero vai na letra do texto.
+function nomeEspaco(tag, cls, n) {
+  const e = el(tag, cls, "Espaço ");
+  e.append(el("span", "num", String(n)));
+  return e;
+}
+function linhasEspaco(box, r, tag) {
+  box.append(el(tag, "", "Nível " + r.nivel + " · " + r.tempo + " de jogo"));
+  if (r.para) box.append(el(tag, "fraco", r.para === r.lugar ? "Próxima parada: " + r.para : "Todos os cristais acesos."));
+  const f = el("div", "cristais");
+  f.setAttribute("role", "img");
+  f.setAttribute("aria-label", r.cristais + " de " + TOTAL + " cristais acesos");
+  for (const [id] of LUGARES) f.append(cristal(r.vencidas[id] === true));
+  box.append(f);
+  if (r.time) box.append(el(tag, "fraco", "Time: " + r.time));
+}
 
-  window.addEventListener("storage", desenhar);
-  desenhar();
-})();
+// ------------------------------------------------------------ abertura
+function desenharAbertura(lista, J) {
+  const salvos = lista.filter((e) => e.r), agora = $("agora");
+  agora.textContent = "";
+  $("jogar-rotulo").textContent = lista.some((e) => e.bruto) ? "Continuar" : "Jogar";
+  $("jogar-linha").textContent = "";
+  if (!salvos.length) agora.append(el("p", "agora-vazio", "Comece no Espaço 1. O jogo salva sozinho neste aparelho."));
+  else {
+    // o mais recente: o save nao tem data, vale o de mais tempo de jogo
+    const e = salvos.reduce((a, b) => (b.r.seg > a.r.seg ? b : a));
+    $("jogar-linha").textContent = "Espaço " + e.n + ": nível " + e.r.nivel + (e.r.para ? ", " + e.r.para : "");
+    agora.append(el("p", "agora-rotulo", "Seu jogo agora"), nomeEspaco("p", "agora-espaco", e.n));
+    linhasEspaco(agora, e.r, "p");
+  }
+  for (const [id, , , , curto] of PINOS) {
+    const b = $("pino-" + id), aceso = !!J.vencidas[id];
+    b.classList.toggle("aceso", aceso);
+    b.setAttribute("aria-label", (curto || NOME_LUGAR[id]) + (aceso ? ": cristal aceso" : ": ainda apagado"));
+  }
+}
+function montarPinos() {
+  for (const [id, mapa, x, y, curto] of PINOS) {
+    const b = el("button", "pino"), nome = el("span", "pino-nome", curto || NOME_LUGAR[id]);
+    b.type = "button"; b.id = "pino-" + id;
+    b.style.left = x / 12.8 + "%"; b.style.top = y / 7.2 + "%";
+    nome.setAttribute("aria-hidden", "true");
+    b.append(foto("launcher/luz/luz_agua.webp", [256, 256], "luz"), foto("launcher/luz/cristal.webp", med("cristal", [51, 120]), "cristal"), nome);
+    b.addEventListener("click", () => {
+      const alvo = $("regiao-" + id) || $("almanaque");
+      alvo.scrollIntoView({ behavior: calmo ? "auto" : "smooth", block: "start" });
+      alvo.focus({ preventScroll: true });
+    });
+    $("mapa-" + mapa).append(b);
+  }
+}
+
+// ------------------------------------------------------------ o almanaque
+// Placa + luz + personagem (+ particulas), no cartao e no detalhe.
+function palco(box, d, sprite, estado, cartao) {
+  box.style.setProperty("--cor", "var(--" + d.cor + ")");
+  box.append(foto("launcher/placa/cen_" + d.placa + "_fundo.webp", med("cen_" + d.placa + "_fundo", [420, 560]), "carta-placa", cartao));
+  const p = el("span", "carta-palco"), luz = foto("launcher/luz/luz_" + d.luz + ".webp", [256, 256], "carta-luz", cartao);
+  if (d.luzA) luz.style.setProperty("--luz-a", d.luzA); // teto da luz no chao (o CSS acende so no aceso)
+  p.append(luz, foto(figura(sprite, cartao || estado === "oculto"), med(sprite, [256, 256]), "carta-figura", cartao));
+  if (cartao && d.part && estado !== "oculto" && estado !== "bloqueado" && !calmo) {
+    const parts = el("span", "carta-particulas");
+    parts.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 4; i++) parts.append(foto("launcher/luz/part_" + d.part + ".webp", [64, 64], "", true));
+    p.append(parts);
+  }
+  box.append(p);
+}
+function carta(tipo, estado, d, sprite, linhas, rotulo, abrir) {
+  const b = el("button", "carta carta-" + tipo + " " + estado), t = el("span", "carta-texto");
+  b.type = "button";
+  if (d.tita) {
+    b.style.setProperty("--cor", "var(--" + d.cor + ")");
+    b.dataset.q1 = "launcher/tita/" + d.tita + "_16.webp";
+    b.dataset.q2 = "launcher/tita/" + d.tita + "_21.webp";
+    b.append(foto(b.dataset.q1, med(d.tita + "_16", [880, 495]), "carta-quadro", true));
+  } else {
+    palco(b, d, sprite, estado, true);
+    b.dataset.poster = figura(sprite, true);
+    if (estado !== "oculto" && !calmo) b.dataset.anim = figura(sprite);
+  }
+  for (const [cls, txt] of linhas) if (txt) t.append(el("span", cls, txt));
+  b.append(t);
+  b.setAttribute("aria-label", rotulo + ". Abrir detalhes");
+  ligarCarta(b, abrir);
+  return b;
+}
+
+// Aceso: luz forte, WebP animado e particulas. Apagado volta ao poster
+// (o tablet nao decodifica 18 animacoes juntas).
+// Baixa a imagem fora da tela e so troca quando ela chegou: o poster fica ate la.
+function trocarQuando(img, src, b) {
+  const pre = new Image();
+  pre.onload = () => { if (b.classList.contains("aceso")) img.src = src; };
+  pre.src = src;
+}
+function acender(b) {
+  if (b.classList.contains("aceso")) return;
+  b.classList.add("aceso");
+  const f = b.querySelector(".carta-figura"), q = b.querySelector(".carta-quadro");
+  if (f && b.dataset.anim) trocarQuando(f, b.dataset.anim, b);
+  if (q && !b.classList.contains("oculto")) trocarQuando(q, b.dataset.q2, b);
+}
+function apagar(b) {
+  if (!b.classList.contains("aceso")) return;
+  b.classList.remove("aceso");
+  const f = b.querySelector(".carta-figura"), q = b.querySelector(".carta-quadro");
+  if (f && b.dataset.anim) f.src = b.dataset.poster;
+  if (q) q.src = b.dataset.q1;
+}
+// Tablet: o cartao 60% na tela por 400 ms acende sozinho; o que sai apaga.
+const esperas = new Map();
+const vigia = semHover && "IntersectionObserver" in window ? new IntersectionObserver((itens) => {
+  for (const { target: b, intersectionRatio: r } of itens) {
+    if (r >= 0.6) { if (!esperas.has(b)) esperas.set(b, setTimeout(() => { esperas.delete(b); acender(b); }, 400)); }
+    else { clearTimeout(esperas.get(b)); esperas.delete(b); apagar(b); }
+  }
+}, { threshold: [0, 0.6] }) : null;
+function ligarCarta(b, abrir) {
+  if (vigia) vigia.observe(b);
+  else {
+    b.addEventListener("mouseenter", () => acender(b));
+    b.addEventListener("mouseleave", () => { if (document.activeElement !== b) apagar(b); });
+    b.addEventListener("focus", () => acender(b));
+    b.addEventListener("blur", () => apagar(b));
+  }
+  // o 1o toque acende; com o cartao aceso (ou com Enter), abre o detalhe
+  b.addEventListener("click", () => (b.classList.contains("aceso") ? abrir(b) : acender(b)));
+}
+
+function desenharAlmanaque(J) {
+  const herois = $("herois"), chefes = $("chefes");
+  if (vigia) vigia.disconnect();
+  herois.textContent = ""; chefes.textContent = "";
+  let achados = 0, ultima = "";
+  for (const h of HEROIS) {
+    const noTime = J.recrutados[h.id] === true;
+    if (noTime) achados++;
+    const est = noTime ? "No seu time" : "Bloqueado: " + h.como;
+    herois.append(carta("heroi", noTime ? "desbloqueado" : "bloqueado", h, "heroi_" + h.id + "_parado",
+      [["carta-classe", h.classe], ["carta-nome", h.nome], ["carta-frase", h.frase], ["carta-estado" + (noTime ? " selo" : ""), est]],
+      h.nome + ", " + h.classe + ". " + (noTime ? "No seu time" : "Bloqueado"), (b) => abrirHeroi(h, J, b)));
+  }
+  $("no-time").textContent = HEROIS.filter((h) => J.recrutados[h.id] === true).length + " de 3 no seu time";
+  for (const c of CHEFES) {
+    const item = el("div", "chefe" + (c.tita ? " largo" : "")), rot = el("div", "regiao");
+    if (c.regiao !== ultima) {
+      ultima = c.regiao;
+      rot.id = "regiao-" + c.regiao;
+      rot.tabIndex = -1;
+      rot.append(cristal(!!J.vencidas[c.regiao], [10, 24]), el("span", "", NOME_LUGAR[c.regiao]));
+    } else rot.setAttribute("aria-hidden", "true");
+    const est = estadoChefe(c, J), achou = est !== "oculto";
+    if (achou) achados++;
+    const txt = est === "vencido" ? (c.entra ? "Vencido, entrou no seu time" : "Vencido") : est === "visto" ? "Visto" : "Ainda não encontrado";
+    item.append(rot, carta(c.tita ? "tita" : "chefe", est, c, "monstro_" + c.id + "_parado",
+      [["carta-classe", achou && c.titulo], ["carta-nome", achou ? c.nome : "???"], ["carta-frase", !achou && c.pista],
+        ["carta-estado" + (est === "vencido" ? " selo" : ""), txt]],
+      (achou ? c.nome + ", " + c.titulo : "Chefe ainda não encontrado, " + NOME_LUGAR[c.regiao]) + ". " + txt,
+      (b) => abrirChefe(c, est, b)));
+    chefes.append(item);
+  }
+  const cont = $("contador");
+  cont.textContent = "";
+  cont.append(el("b", "", String(achados)), " de " + (HEROIS.length + CHEFES.length) + " encontrados");
+}
+
+// ------------------------------------------------------------ o detalhe
+const dialogo = $("detalhe"), det = $("det");
+const temModal = typeof dialogo.showModal === "function";
+let origem = null;
+function aoFechar() {
+  const v = dialogo.querySelector("video");
+  if (v) { v.pause(); v.removeAttribute("src"); v.load(); }
+  det.textContent = "";
+  if (origem) origem.focus();
+}
+function fecharDetalhe() {
+  if (temModal) { dialogo.close(); return; }
+  if (!dialogo.hasAttribute("open")) return;
+  dialogo.removeAttribute("open");
+  aoFechar();
+}
+if (temModal) dialogo.addEventListener("close", aoFechar);
+else {
+  dialogo.classList.add("sem-modal");
+  addEventListener("keydown", (ev) => { if (ev.key === "Escape") fecharDetalhe(); });
+}
+dialogo.addEventListener("click", (ev) => { if (ev.target === dialogo) fecharDetalhe(); });
+function botao(txt, acao) {
+  const b = el("button", "botao", txt);
+  b.type = "button";
+  b.addEventListener("click", acao);
+  return b;
+}
+function abrirDetalhe(b, d, fig, classe, nome, frase, estado, selo, extra) {
+  const t = el("div", "det-texto"), h = el("h3", "", nome);
+  t.style.setProperty("--cor", "var(--" + d.cor + ")");
+  h.id = "det-nome";
+  t.append(el("p", "det-classe", classe), h);
+  if (frase) t.append(el("p", "det-frase", frase));
+  t.append(el("p", "det-estado" + (selo ? " selo" : ""), estado));
+  if (extra) extra(t);
+  const fechar = botao("Fechar", fecharDetalhe);
+  fechar.classList.add("det-fechar");
+  t.append(fechar);
+  det.textContent = "";
+  det.className = "det" + (d.tita ? " tita-det" : "");
+  det.append(fig, t);
+  origem = b;
+  if (temModal) dialogo.showModal(); else dialogo.setAttribute("open", "");
+  fechar.focus();
+}
+function abrirHeroi(h, J, b) {
+  const noTime = J.recrutados[h.id] === true, fig = el("figure", "det-arte"), sprite = "heroi_" + h.id + "_parado";
+  palco(fig, h, sprite, "aberto", false);
+  abrirDetalhe(b, h, fig, h.classe, h.nome, h.frase, noTime ? "No seu time" : "Bloqueado: " + h.como, noTime, (t) => {
+    const botoes = el("div", "det-botoes");
+    if (noTime) {
+      // Despertar/Mimica e o Especial: so de quem ja esta no time
+      const alt = botao(h.alt[0], () => {
+        const liga = alt.getAttribute("aria-pressed") !== "true", s = liga ? h.alt[1] : sprite;
+        const img = fig.querySelector(".carta-figura"), m = med(s, [256, 256]);
+        alt.setAttribute("aria-pressed", String(liga));
+        Object.assign(img, { width: m[0], height: m[1], src: figura(s) });
+      });
+      alt.setAttribute("aria-pressed", "false");
+      botoes.append(alt);
+      if (h.video) botoes.append(botao("Ver o Especial", () => {
+        let v = fig.querySelector("video");
+        if (!v) {
+          v = el("video");
+          Object.assign(v, { muted: true, playsInline: true, controls: true, preload: "none", width: 1280, height: 720 });
+          fig.append(v);
+        }
+        v.src = h.video;
+        v.play().catch(() => { /* o toque nos controles toca */ });
+      }));
+    }
+    const ul = el("ul");
+    for (const n of h.hab) ul.append(el("li", "", n));
+    const venceu = J.vencidas[h.regiao] || temMarco(J, h.regiao, h.id) || (h.time && J.recrutados[h.id]);
+    t.append(botoes, el("h4", "", "Habilidades"), ul, el("h4", "", "Como chefe"),
+      el("p", "", h.chefe + ". " + (venceu ? "Vencido." : "Ainda não vencido.")));
+  });
+}
+function abrirChefe(c, est, b) {
+  const achou = est !== "oculto";
+  let fig;
+  if (c.tita) {
+    fig = el("figure", "det-arte tita");
+    const q = foto("launcher/tita/" + c.tita + (est === "vencido" ? "_21" : "_16") + ".webp", med(c.tita + "_16", [880, 495]), "carta-placa");
+    q.style.filter = est === "vencido" ? "none" : est === "visto" ? "brightness(.55)" : "brightness(.16) saturate(.3)";
+    fig.append(q);
+  } else {
+    fig = el("figure", "det-arte" + (achou ? "" : " oculto"));
+    palco(fig, c, "monstro_" + c.id + "_parado", est, false);
+  }
+  const txt = est === "vencido" ? (c.entra ? "Vencido, entrou no seu time." : "Vencido.") : est === "visto" ? "Visto, ainda não vencido." : "Ainda não encontrado.";
+  abrirDetalhe(b, c, fig, achou ? c.titulo : NOME_LUGAR[c.regiao], achou ? c.nome : "???",
+    achou ? "Em " + NOME_LUGAR[c.regiao] + "." : c.pista, txt, est === "vencido");
+}
+
+// ------------------------------------------------------------ espacos
+function desenharEspacos(lista) {
+  const box = $("espacos");
+  box.textContent = "";
+  for (const e of lista) {
+    const card = el("div", "espaco" + (e.bruto ? "" : " vazio"));
+    card.append(nomeEspaco("div", "espaco-nome", e.n));
+    if (!e.bruto) card.append(el("div", "fraco", "Vazio. Um jogo novo pode começar aqui."));
+    else if (!e.r) card.append(el("div", "fraco", "Este jogo salvo não abriu aqui (o jogo tenta de novo ao abrir)."));
+    else linhasEspaco(card, e.r, "div");
+    box.append(card);
+  }
+  $("baixar").disabled = !lista.some((e) => e.bruto);
+}
+function desenhar() {
+  const lista = lerEspacos(), J = juntar(lista);
+  desenharAbertura(lista, J);
+  desenharAlmanaque(J);
+  desenharEspacos(lista);
+}
+function avisar(txt, tipo) {
+  const e = $("estado");
+  e.textContent = txt;
+  e.className = "estado" + (tipo ? " " + tipo : "");
+}
+
+$("baixar").addEventListener("click", () => {
+  const copia = { jogo: "Cristais de Lumen", formato: 1, data: new Date().toISOString(), espacos: {} };
+  for (let n = 1; n <= ESPACOS; n++) { const v = ler(chave(n)); if (v) copia.espacos[n] = v; }
+  const a = el("a"), d = new Date();
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(copia, null, 1)], { type: "application/json" }));
+  a.download = "cristais-de-lumen-jogos-" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + ".json";
+  document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  avisar("Cópia baixada. Guarde o arquivo: com ele você recupera seus jogos em qualquer aparelho.", "ok");
+});
+
+$("arquivo").addEventListener("change", (ev) => {
+  const f = ev.target.files && ev.target.files[0];
+  ev.target.value = "";
+  if (!f) return;
+  if (f.size > 2 * 1024 * 1024) return avisar("Esse arquivo é grande demais para ser uma cópia dos jogos.", "erro");
+  const leitor = new FileReader();
+  leitor.onload = () => {
+    let c;
+    try { c = JSON.parse(leitor.result); } catch (e) { c = null; }
+    if (!c || c.jogo !== "Cristais de Lumen" || typeof c.espacos !== "object" || !c.espacos) {
+      return avisar("Esse arquivo não é uma cópia de jogos do Cristais de Lumen.", "erro");
+    }
+    const validos = [];
+    for (let n = 1; n <= ESPACOS; n++) {
+      const v = c.espacos[n];
+      if (typeof v === "string" && /^[A-Za-z0-9+/=]+$/.test(v) && decodificar(v)) validos.push([n, v]);
+    }
+    if (!validos.length) return avisar("A cópia não tem nenhum jogo que abra.", "erro");
+    const ocupados = validos.filter(([n, v]) => { const a = ler(chave(n)); return a && a !== v; }).map(([n]) => n);
+    if (ocupados.length && !confirm("Os espaços " + ocupados.join(", ") + " deste aparelho já têm jogos. Trocar pelos da cópia?")) {
+      return avisar("Nada foi mudado.", "");
+    }
+    const ok = validos.every(([n, v]) => gravar(chave(n), v));
+    desenhar();
+    avisar(ok ? "Pronto! Seus jogos foram carregados neste aparelho." : "O navegador não deixou gravar (modo anônimo?).", ok ? "ok" : "erro");
+  };
+  leitor.onerror = () => avisar("Não consegui ler o arquivo.", "erro");
+  leitor.readAsText(f);
+});
+
+// ------------------------------------------------------------ movimento
+// Ao rolar, a faixa dos mapas anda +-20 px (transform, um quadro por vez).
+const trilho = $("trilho"), largo = matchMedia("(min-width: 1024px)");
+let pedido = false;
+function moverFaixa() {
+  pedido = false;
+  if (calmo || !largo.matches) { trilho.style.transform = ""; return; }
+  const p = Math.min(1, Math.max(0, scrollY / ($("topo").offsetHeight || 1)));
+  trilho.style.transform = "translate3d(" + (20 - 40 * p).toFixed(1) + "px, 0, 0)";
+}
+addEventListener("scroll", () => { if (!pedido) { pedido = true; requestAnimationFrame(moverFaixa); } }, { passive: true });
+
+const ua = navigator.userAgent || "";
+if (/iPad|iPhone|Android|Mobile|Tablet/i.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua))) {
+  $("dica").textContent = "No tablet ou celular: deite o aparelho e toque na tela. A primeira abertura demora um pouco.";
+}
+$("versao").textContent = "Versão de " + VERSAO + ".";
+montarPinos();
+addEventListener("storage", desenhar);
+desenhar();
+moverFaixa();
 </script>
 </body>
 </html>
