@@ -1,0 +1,29 @@
+{
+  "titulo": [
+    8.3,
+    12.0
+  ],
+  "impacto": 16.0,
+  "tremer": 26.0,
+  "flash": 0.85,
+  "sons": [
+    {
+      "t": 1.8,
+      "som": "sfx_algaz_olhos"
+    },
+    {
+      "t": 4.3,
+      "som": "sfx_algaz_despertar"
+    },
+    {
+      "t": 9.6,
+      "som": "sfx_algaz_aura"
+    },
+    {
+      "t": 13.2,
+      "som": "sfx_algaz_cavalo_grito"
+    }
+  ],
+  "som_golpe": 16.0,
+  "volume_video": 0.8
+}
